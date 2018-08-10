@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "carraway"
+require "carraway/cli"
+
+Carraway::CLI.start(ARGV)
