@@ -7,7 +7,7 @@
       <ul>
         <% Array(@category_posts[category.key]).each do |post| %>
           <li>
-            <%= post.title %>
+            <a href="/edit<%= post.path %>"><%= post.title %></a>
           </li>
         <% end %>
       </ul>

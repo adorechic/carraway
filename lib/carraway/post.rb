@@ -7,11 +7,9 @@ module Carraway
         client.create_table(
           attribute_definitions: [
             { attribute_name: :path, attribute_type: "S" },
-            { attribute_name: :updated, attribute_type: "N" },
           ],
           key_schema: [
             { attribute_name: :path, key_type: "HASH" },
-            { attribute_name: :updated, key_type: "RANGE" },
           ],
           provisioned_throughput: {
             read_capacity_units: 5,
@@ -43,6 +41,25 @@ module Carraway
 
       def all
         client.scan(table_name: Config.backend['table_name']).items.map do |item|
+          new(
+            title: item['title'],
+            body: item['body'],
+            path: item['path'],
+            category: Category.find(item['category']),
+            created: Time.at(item['created']),
+            updated: Time.at(item['updated'])
+          )
+        end
+      end
+
+      def find(path)
+        item = client.get_item(
+          key: {
+            path: path
+          },
+          table_name: Config.backend['table_name'],
+        ).item
+        if item
           new(
             title: item['title'],
             body: item['body'],

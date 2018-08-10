@@ -14,6 +14,11 @@ module Carraway
       erb :new
     end
 
+    get %r{/edit([\w\./]+)} do |path|
+      @post = Post.find(path)
+      erb :edit
+    end
+
     post '/' do
       Post.create(
         title: params[:title],
