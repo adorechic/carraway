@@ -6,12 +6,12 @@ module Carraway
       def setup
         client.create_table(
           attribute_definitions: [
-            { attribute_name: "Path", attribute_type: "S" },
-            { attribute_name: "Updated", attribute_type: "N" },
+            { attribute_name: :path, attribute_type: "S" },
+            { attribute_name: :updated, attribute_type: "N" },
           ],
           key_schema: [
-            { attribute_name: "Path", key_type: "HASH" },
-            { attribute_name: "Updated", key_type: "RANGE" },
+            { attribute_name: :path, key_type: "HASH" },
+            { attribute_name: :updated, key_type: "RANGE" },
           ],
           provisioned_throughput: {
             read_capacity_units: 5,
@@ -30,12 +30,12 @@ module Carraway
         item = {
           table_name: Config.backend['table_name'],
           item: {
-            "Title" => title,
-            "Body" => body,
-            "Path" => category.fullpath(path),
-            "Category" => category.key,
-            "Created" => at.to_i,
-            "Updated" => at.to_i
+            title: title,
+            body: body,
+            path: category.fullpath(path),
+            category: category.key,
+            created: at.to_i,
+            updated: at.to_i
           }
         }
         client.put_item(item)
