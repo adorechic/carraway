@@ -41,6 +41,19 @@ module Carraway
         client.put_item(item)
       end
 
+      def all
+        client.scan(table_name: Config.backend['table_name']).items.map do |item|
+          new(
+            title: item['title'],
+            body: item['body'],
+            path: item['path'],
+            category: Category.find(item['category']),
+            created: Time.at(item['created']),
+            updated: Time.at(item['updated'])
+          )
+        end
+      end
+
       private
 
       def client
@@ -51,6 +64,17 @@ module Carraway
           secret_access_key: 'dummy'
         )
       end
+    end
+
+    attr_reader :title, :body, :path, :category, :created, :updated
+
+    def initialize(title:, body:, path:, category:, created:, updated:)
+      @title = title
+      @body = body
+      @path = path
+      @category = category
+      @created = created
+      @updated = updated
     end
   end
 end

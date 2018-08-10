@@ -2,10 +2,15 @@
 <html>
   <body>
     <a href="/new">新規作成</a>
-    <ul>
-      <% Carraway::Category.all.each do |category| %>
-        <li><%= category.title %></li>
-      <% end %>
-    </ul>
+    <% @categories.each do |category| %>
+      <h2><%= category.title %></h2>
+      <ul>
+        <% Array(@category_posts[category.key]).each do |post| %>
+          <li>
+            <%= post.title %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </body>
 </html>

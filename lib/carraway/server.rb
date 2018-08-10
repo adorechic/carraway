@@ -5,6 +5,8 @@ module Carraway
     set :views, File.expand_path('../views', __FILE__)
 
     get '/' do
+      @categories = Category.all
+      @category_posts = Post.all.group_by {|post| post.category.key }
       erb :top
     end
 
