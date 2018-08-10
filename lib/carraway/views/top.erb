@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul>
+      <% Carraway::Category.all.each do |category| %>
+        <li><%= category.title %></li>
+      <% end %>
+    </ul>
+  </body>
+</html>

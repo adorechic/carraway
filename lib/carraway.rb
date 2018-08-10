@@ -1,5 +1,7 @@
-require "carraway/version"
-
 module Carraway
-  # Your code goes here...
 end
+
+require 'carraway/version'
+require 'carraway/category'
+require 'carraway/config'
+require 'carraway/server'
