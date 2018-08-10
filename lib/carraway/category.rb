@@ -3,7 +3,7 @@ module Carraway
     class << self
       def load(categories)
         @categories = categories.inject({}) do |hash, (key, attributes)|
-          hash[key] = new(title: attributes['title'])
+          hash[key] = new(key: key, title: attributes['title'], dir: attributes['dir'])
           hash
         end
       end
@@ -17,10 +17,16 @@ module Carraway
       end
     end
 
-    attr_reader :title
+    attr_reader :key, :title
 
-    def initialize(title:)
+    def initialize(key:, title:, dir:)
+      @key = key
       @title = title
+      @dir = dir
+    end
+
+    def fullpath(path)
+      [@dir, path, '.md'].join
     end
   end
 end

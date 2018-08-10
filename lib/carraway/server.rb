@@ -7,5 +7,19 @@ module Carraway
     get '/' do
       erb :top
     end
+
+    get '/new' do
+      erb :new
+    end
+
+    post '/' do
+      Post.create(
+        title: params[:title],
+        path: params[:path],
+        body: params[:body],
+        category_key: params[:category]
+      )
+      'Created!'
+    end
   end
 end
