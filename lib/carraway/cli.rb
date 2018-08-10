@@ -16,5 +16,12 @@ module Carraway
       Carraway::Config.load(options[:config])
       Carraway::Post.setup
     end
+
+    desc 'drop', 'Drop backend'
+    option :config, default: 'carraway.yml', aliases: 'c', type: :string
+    def drop
+      Carraway::Config.load(options[:config])
+      Carraway::Post.drop
+    end
   end
 end

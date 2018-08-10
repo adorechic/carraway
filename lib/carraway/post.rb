@@ -21,6 +21,10 @@ module Carraway
         )
       end
 
+      def drop
+        client.delete_table(table_name: Config.backend['table_name'])
+      end
+
       def create(title:, path:, body:, category_key:, at: Time.now)
         category = Category.find(category_key)
         item = {
