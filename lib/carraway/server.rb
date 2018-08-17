@@ -27,7 +27,21 @@ module Carraway
         body: params[:body],
         category_key: params[:category]
       )
+      # FIXME redirect with message
       'Created!'
+    end
+
+    post '/update' do
+      @post = Post.find(params[:path])
+      # FIXME handle not found
+      @post.assign(
+        title: params[:title],
+        body: params[:body]
+      )
+      # FIXME validation
+      @post.save
+      # FIXME redirect with message
+      'Updated'
     end
   end
 end

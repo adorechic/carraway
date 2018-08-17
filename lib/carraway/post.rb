@@ -72,8 +72,6 @@ module Carraway
         end
       end
 
-      private
-
       def client
         Aws::DynamoDB::Client.new(
           endpoint: Config.backend['endpoint'],
@@ -93,6 +91,29 @@ module Carraway
       @category = category
       @created = created
       @updated = updated
+    end
+
+    def assign(title:, body:)
+      @title = title
+      @body = body
+    end
+
+    def save(at: Time.now)
+      self.class.client.put_item(
+        table_name: Config.backend['table_name'],
+        item: to_h.merge(updated: at.to_i)
+      )
+    end
+
+    def to_h
+      {
+        title: @title,
+        body: @body,
+        path: @path,
+        category: @category.key,
+        created: @created.to_i,
+        updated: @updated.to_i,
+      }
     end
   end
 end
