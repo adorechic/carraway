@@ -3,13 +3,7 @@
   <body>
    <form action="/update" method="POST">
       <ul>
-        <li>
-          <select name="category">
-            <% Carraway::Category.all.each do |category| %>
-              <option value="<%= category.key %>"<%= @post.category == category ? 'selected' : nil %>><%= category.title %></option>
-            <% end %>
-          </select>
-        </li>
+        <li><%= @post.category.title %></li>
         <li>
           <%= @post.path %>
           <input type="hidden" name="path" value="<%= @post.path %>">
