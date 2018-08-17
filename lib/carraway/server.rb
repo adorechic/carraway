@@ -16,6 +16,7 @@ module Carraway
 
     get %r{/edit([\w\./]+)} do |path|
       @post = Post.find(path)
+      # FIXME handle not found
       erb :edit
     end
 

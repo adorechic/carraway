@@ -25,6 +25,7 @@ module Carraway
 
       def create(title:, path:, body:, category_key:, at: Time.now)
         category = Category.find(category_key)
+        # FIXME check path to prevent overwriting
         item = {
           table_name: Config.backend['table_name'],
           item: {
