@@ -105,6 +105,15 @@ module Carraway
       )
     end
 
+    def destroy
+      self.class.client.delete_item(
+        table_name: Config.backend['table_name'],
+        key: {
+          path: @path
+        }
+      )
+    end
+
     def to_h
       {
         title: @title,

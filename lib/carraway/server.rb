@@ -44,5 +44,12 @@ module Carraway
       # FIXME redirect with message
       'Updated'
     end
+
+    delete '/destroy' do
+      @post = Post.find(params[:path]) # FIXME handle not found
+      @post.destroy
+      # FIXME redirect with message
+      'Deleted'
+    end
   end
 end

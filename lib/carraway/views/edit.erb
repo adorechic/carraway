@@ -14,5 +14,10 @@
       </ul>
       <button type="submit">保存</button>
     </form>
+   <form action="/destroy" method="POST">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="hidden" name="path" value="<%= @post.path %>">
+      <button type="submit">削除</button>
+    </form>
   </body>
 </html>
