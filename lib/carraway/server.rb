@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'json'
 
 module Carraway
   class Server < Sinatra::Base
@@ -9,6 +10,11 @@ module Carraway
       @categories = Category.all
       @category_posts = Post.all.group_by {|post| post.category.key }
       erb :top
+    end
+
+    get '/api/posts' do
+      posts = Post.all.map(&:to_h)
+      { data: { posts: posts } }.to_json
     end
 
     get '/new' do
