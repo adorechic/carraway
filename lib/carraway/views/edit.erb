@@ -2,6 +2,7 @@
 <html>
   <body>
    <form action="/update" method="POST">
+      <input type="hidden" name="_method" value="PATCH">
       <ul>
         <li><%= @post.category.title %></li>
         <li>

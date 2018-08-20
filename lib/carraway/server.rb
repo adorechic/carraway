@@ -3,6 +3,7 @@ require 'sinatra'
 module Carraway
   class Server < Sinatra::Base
     set :views, File.expand_path('../views', __FILE__)
+    set :method_override, true
 
     get '/' do
       @categories = Category.all
@@ -31,7 +32,7 @@ module Carraway
       'Created!'
     end
 
-    post '/update' do
+    patch '/update' do
       @post = Post.find(params[:path])
       # FIXME handle not found
       @post.assign(
