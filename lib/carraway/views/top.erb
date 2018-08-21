@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <a href="/new">新規作成</a>
-    <% @categories.each do |category| %>
-      <h2><%= category.title %></h2>
-      <ul>
-        <% Array(@category_posts[category.key]).each do |post| %>
-          <li>
-            <a href="/edit<%= post.path %>"><%= post.title %></a>
-          </li>
-        <% end %>
-      </ul>
+<% @categories.each do |category| %>
+  <h2><%= category.title %></h2>
+  <ul>
+    <% Array(@category_posts[category.key]).each do |post| %>
+      <li>
+        <a href="/edit<%= post.path %>"><%= post.title %></a>
+      </li>
     <% end %>
-  </body>
-</html>
+  </ul>
+<% end %>

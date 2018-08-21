@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <body>
-   <form action="/update" method="POST">
-      <input type="hidden" name="_method" value="PATCH">
-      <ul>
-        <li><%= @post.category.title %></li>
-        <li>
-          <%= @post.path %>
-          <input type="hidden" name="path" value="<%= @post.path %>">
-        </li>
-        <li><input type="text" name="title" placeholder="title" value=<%= @post.title %>></li>
-        <li><textarea name="body"><%= @post.body %></textarea></li>
-      </ul>
-      <button type="submit">保存</button>
-    </form>
-   <form action="/destroy" method="POST">
-      <input type="hidden" name="_method" value="DELETE">
+<form action="/update" method="POST">
+  <input type="hidden" name="_method" value="PATCH">
+  <ul>
+    <li><%= @post.category.title %></li>
+    <li>
+      <%= @post.path %>
       <input type="hidden" name="path" value="<%= @post.path %>">
-      <button type="submit">削除</button>
-    </form>
-  </body>
-</html>
+    </li>
+    <li><input type="text" name="title" placeholder="title" value=<%= @post.title %>></li>
+    <li><textarea name="body"><%= @post.body %></textarea></li>
+  </ul>
+  <button type="submit">保存</button>
+</form>
+<form action="/destroy" method="POST">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="hidden" name="path" value="<%= @post.path %>">
+  <button type="submit">削除</button>
+</form>
