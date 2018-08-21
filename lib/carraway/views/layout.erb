@@ -5,7 +5,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
   </head>
   <body>
-    <a href="/new">新規作成</a>
-    <%= yield %>
+    <div class="container">
+      <header>
+        <nav>
+          <div class="nav-wrapper">
+            <a href="/" class="brand-logo">Carraway</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="/">記事一覧</a></li>
+              <li><a href="/new">新規作成</a></li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <%= yield %>
+    </div>
   </body>
 </html>
