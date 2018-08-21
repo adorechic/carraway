@@ -1,8 +1,10 @@
 <% @categories.each do |category| %>
-  <h2><%= category.title %></h2>
-  <ul>
+  <ul class="collection with-header">
+    <li class="collection-header">
+      <%= category.title %>
+    </li>
     <% Array(@category_posts[category.key]).each do |post| %>
-      <li>
+      <li class="collection-item">
         <a href="/edit<%= post.path %>"><%= post.title %></a>
       </li>
     <% end %>
