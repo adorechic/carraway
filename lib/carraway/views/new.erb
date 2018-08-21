@@ -1,15 +1,27 @@
-<form action="/" method="POST">
-  <ul>
-    <li>
-      <select name="category">
+<div class="row">
+  <form action="/" method="POST" class="col s12">
+    <div class="row">
+      <label>記事カテゴリー</label>
+      <select name="category" class="browser-default">
+        <option value="" disabled selected>記事カテゴリーを選択</option>
         <% Carraway::Category.all.each do |category| %>
           <option value="<%= category.key %>"><%= category.title %></option>
         <% end %>
       </select>
-    </li>
-    <li><input type="text" name="path" placeholder="path"></li>
-    <li><input type="text" name="title" placeholder="title"></li>
-    <li><textarea name="body"></textarea></li>
-  </ul>
-  <button type="submit">保存</button>
-</form>
+      <div class="input-field col s12">
+        <input type="text" id="path" name="path" placeholder="post_url_path">
+        <label for="path">Path</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="text" id="title" name="title" placeholder="記事タイトル">
+        <label for="title">記事タイトル</label>
+      </div>
+      <div class="input-field col s12">
+        <textarea id="body" name="body" class="materialize-textarea"></textarea>
+        <label for="body">本文</label>
+      </div>
+    </div>
+
+    <button type="submit" class="waves-effect waves-light btn">保存</button>
+  </form>
+</div>
