@@ -26,18 +26,16 @@ module Carraway
       def create(title:, path:, body:, category_key:, at: Time.now)
         category = Category.find(category_key)
         # FIXME check path to prevent overwriting
-        item = {
-          table_name: Config.backend['table_name'],
-          item: {
-            title: title,
-            body: body,
-            path: category.fullpath(path),
-            category: category.key,
-            created: at.to_i,
-            updated: at.to_i
-          }
-        }
-        client.put_item(item)
+        post = new(
+          title: title,
+          body: body,
+          path: category.fullpath(path),
+          category: category,
+          created: at.to_i,
+          updated: at.to_i
+        )
+        post.save(at: at)
+        post
       end
 
       def all

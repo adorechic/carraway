@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor'
   spec.add_dependency 'sinatra'
   spec.add_dependency 'aws-sdk-dynamodb'
+  spec.add_dependency 'rack-flash3'
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"

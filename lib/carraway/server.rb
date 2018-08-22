@@ -1,10 +1,13 @@
 require 'sinatra'
 require 'json'
+require 'rack/flash'
 
 module Carraway
   class Server < Sinatra::Base
     set :views, File.expand_path('../views', __FILE__)
     set :method_override, true
+    enable :sessions
+    use Rack::Flash
 
     get '/' do
       @categories = Category.all
@@ -28,14 +31,14 @@ module Carraway
     end
 
     post '/' do
-      Post.create(
+      @post = Post.create(
         title: params[:title],
         path: params[:path],
         body: params[:body],
         category_key: params[:category]
       )
-      # FIXME redirect with message
-      'Created!'
+      flash[:message] = 'Created'
+      redirect "/edit#{@post.path}"
     end
 
     patch '/update' do
@@ -47,15 +50,15 @@ module Carraway
       )
       # FIXME validation
       @post.save
-      # FIXME redirect with message
-      'Updated'
+      flash[:message] = 'Updated'
+      redirect "/edit#{@post.path}"
     end
 
     delete '/destroy' do
       @post = Post.find(params[:path]) # FIXME handle not found
       @post.destroy
-      # FIXME redirect with message
-      'Deleted'
+      flash[:message] = "Deleted #{@post.path}"
+      redirect "/"
     end
   end
 end
