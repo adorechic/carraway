@@ -26,7 +26,7 @@ module Carraway
     end
 
     def fullpath(path)
-      [@dir, path, '.md'].join
+      [@dir, path].join
     end
   end
 end
