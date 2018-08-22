@@ -1,18 +1,42 @@
-<form action="/update" method="POST">
-  <input type="hidden" name="_method" value="PATCH">
-  <ul>
-    <li><%= @post.category.title %></li>
-    <li>
-      <%= @post.path %>
-      <input type="hidden" name="path" value="<%= @post.path %>">
-    </li>
-    <li><input type="text" name="title" placeholder="title" value=<%= @post.title %>></li>
-    <li><textarea name="body"><%= @post.body %></textarea></li>
-  </ul>
-  <button type="submit">保存</button>
-</form>
-<form action="/destroy" method="POST">
-  <input type="hidden" name="_method" value="DELETE">
-  <input type="hidden" name="path" value="<%= @post.path %>">
-  <button type="submit">削除</button>
-</form>
+<div class="row">
+  <form action="/update" method="POST" class="col s12">
+    <input type="hidden" name="_method" value="PATCH">
+    <div class="row">
+      <table>
+        <thead>
+          <tr>
+            <th>カテゴリー</th>
+            <th>Path</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @post.category.title %></td>
+            <td>
+              <%= @post.path %>
+              <input type="hidden" name="path" value="<%= @post.path %>">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="input-field col s12">
+        <input type="text" id="title" name="title" placeholder="記事タイトル" value="<%= @post.title %>">
+        <label for="title">記事タイトル</label>
+      </div>
+      <div class="input-field col s12">
+        <textarea id="body" name="body" class="materialize-textarea"><%= @post.body %></textarea>
+        <label for="body">本文</label>
+      </div>
+    </div>
+    <div class="col s6">
+      <button type="submit" class="waves-effect waves-light btn">保存</button>
+    </div>
+  </form>
+  <form action="/destroy" method="POST" class="col s12">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="path" value="<%= @post.path %>">
+    <div class="col s6">
+      <button type="submit" class="waves-effect waves-light btn red">削除</button>
+    </div>
+  </form>
+</div>
