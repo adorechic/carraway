@@ -30,6 +30,19 @@ module Carraway
       erb :edit
     end
 
+    get %r{/preview([\w\./]+)} do |path|
+      @post = Post.find(path)
+      # FIXME handle not found
+
+      # Refresh GatsbyJS
+      uri = URI.parse("http://localhost:8000/__refresh")
+      http = Net::HTTP.new(uri.host, uri.port)
+      req = Net::HTTP::Post.new(uri.path)
+      res = http.request(req) # FIXME Handle errors
+
+      redirect "http://localhost:8000#{@post.path}"
+    end
+
     post '/' do
       @post = Post.create(
         title: params[:title],
