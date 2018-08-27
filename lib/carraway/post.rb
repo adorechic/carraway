@@ -71,12 +71,16 @@ module Carraway
       end
 
       def client
-        Aws::DynamoDB::Client.new(
-          endpoint: Config.backend['endpoint'],
-          region: Config.backend['region'],
-          access_key_id: 'dummy',
-          secret_access_key: 'dummy'
-        )
+        if Config.backend['endpoint']
+          Aws::DynamoDB::Client.new(
+            endpoint: Config.backend['endpoint'],
+            region: Config.backend['region'],
+            access_key_id: 'dummy',
+            secret_access_key: 'dummy'
+          )
+        else
+          Aws::DynamoDB::Client.new
+        end
       end
     end
 
