@@ -12,8 +12,8 @@ module Carraway
             { attribute_name: :path, key_type: "HASH" },
           ],
           provisioned_throughput: {
-            read_capacity_units: 5,
-            write_capacity_units: 5,
+            read_capacity_units: 5, # FIXME configurable
+            write_capacity_units: 5, # FIXME configurable
           },
           table_name: Config.backend['table_name'],
         )
