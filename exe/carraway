@@ -1,3 +1,6 @@
 #!/usr/bin/env ruby
 
 require "carraway"
+require "carraway/cli"
+
+Carraway::CLI.start(ARGV)
