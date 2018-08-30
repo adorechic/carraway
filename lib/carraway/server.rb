@@ -10,27 +10,31 @@ module Carraway
     use Rack::Flash
 
     get '/' do
+      redirect '/carraway'
+    end
+
+    get '/carraway' do
       @categories = Category.all
       @category_posts = Post.all.group_by {|post| post.category.key }
       erb :top
     end
 
-    get '/api/posts' do
+    get '/carraway/api/posts' do
       posts = Post.all.map(&:to_h)
       { data: { posts: posts } }.to_json
     end
 
-    get '/new' do
+    get '/carraway/new' do
       erb :new
     end
 
-    get %r{/edit([\w\./]+)} do |path|
+    get %r{/carraway/edit([\w\./]+)} do |path|
       @post = Post.find(path)
       # FIXME handle not found
       erb :edit
     end
 
-    get %r{/preview([\w\./]+)} do |path|
+    get %r{/carraway/preview([\w\./]+)} do |path|
       @post = Post.find(path)
       # FIXME handle not found
 
@@ -43,7 +47,7 @@ module Carraway
       redirect "http://localhost:8000#{@post.path}"
     end
 
-    post '/' do
+    post '/carraway' do
       @post = Post.create(
         title: params[:title],
         path: params[:path],
@@ -51,10 +55,10 @@ module Carraway
         category_key: params[:category]
       )
       flash[:message] = 'Created'
-      redirect "/edit#{@post.path}"
+      redirect "/carraway/edit#{@post.path}"
     end
 
-    patch '/update' do
+    patch '/carraway/update' do
       @post = Post.find(params[:path])
       # FIXME handle not found
       @post.assign(
@@ -64,10 +68,10 @@ module Carraway
       # FIXME validation
       @post.save
       flash[:message] = 'Updated'
-      redirect "/edit#{@post.path}"
+      redirect "/carraway/edit#{@post.path}"
     end
 
-    delete '/destroy' do
+    delete '/carraway/destroy' do
       @post = Post.find(params[:path]) # FIXME handle not found
       @post.destroy
       flash[:message] = "Deleted #{@post.path}"
