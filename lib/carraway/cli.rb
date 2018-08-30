@@ -6,7 +6,7 @@ module Carraway
     option :config, default: 'carraway.yml', aliases: 'c', type: :string
     def start
       Carraway::Config.load(options[:config])
-      Carraway::Server.run!
+      Carraway::Server.run!(port: Config.port)
     end
 
 

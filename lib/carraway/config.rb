@@ -11,6 +11,10 @@ module Carraway
       def backend
         @config['backend']
       end
+
+      def port
+        @config['port'] || 5000
+      end
     end
   end
 end
