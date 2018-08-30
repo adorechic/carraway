@@ -75,7 +75,7 @@ module Carraway
       @post = Post.find(params[:path]) # FIXME handle not found
       @post.destroy
       flash[:message] = "Deleted #{@post.path}"
-      redirect "/"
+      redirect "/carraway"
     end
   end
 end
