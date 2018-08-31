@@ -10,10 +10,10 @@ module Carraway
     use Rack::Flash
 
     get '/' do
-      redirect '/carraway'
+      redirect '/carraway/'
     end
 
-    get '/carraway' do
+    get '/carraway/' do
       @categories = Category.all
       @category_posts = Post.all.group_by {|post| post.category.key }
       erb :top
@@ -47,7 +47,7 @@ module Carraway
       redirect "http://localhost:8000#{@post.path}"
     end
 
-    post '/carraway' do
+    post '/carraway/' do
       @post = Post.create(
         title: params[:title],
         path: params[:path],
