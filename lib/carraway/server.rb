@@ -45,7 +45,7 @@ module Carraway
       req = Net::HTTP::Post.new(uri.path)
       res = http.request(req) # FIXME Handle errors
 
-      redirect [Config.gatsby_endpoint, @port.path].join
+      redirect [Config.gatsby_endpoint, @post.path].join
     end
 
     post '/carraway/' do
