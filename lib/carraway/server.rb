@@ -39,12 +39,13 @@ module Carraway
       # FIXME handle not found
 
       # Refresh GatsbyJS
-      uri = URI.parse("http://localhost:8000/__refresh")
+      uri = URI.parse([Config.gatsby_endpoint, '/__refresh'].join)
+
       http = Net::HTTP.new(uri.host, uri.port)
       req = Net::HTTP::Post.new(uri.path)
       res = http.request(req) # FIXME Handle errors
 
-      redirect "http://localhost:8000#{@post.path}"
+      redirect [Config.gatsby_endpoint, @port.path].join
     end
 
     post '/carraway/' do

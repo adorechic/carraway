@@ -15,6 +15,10 @@ module Carraway
       def port
         @config['port'] || 5000
       end
+
+      def gatsby_endpoint
+        @config['gatsby_endpoint'] || 'http://localhost:8000'
+      end
     end
   end
 end
