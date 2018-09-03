@@ -1,12 +1,23 @@
 <% @categories.each do |category| %>
-  <ul class="collection with-header">
-    <li class="collection-header">
-      <%= category.title %>
-    </li>
+  <h3><%= category.title %></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>タイトル</th>
+        <th>作成日</th>
+        <th>更新日</th>
+        <th>公開日</th>
+      </tr>
+    </thead>
+    <tbody>
     <% Array(@category_posts[category.key]).each do |post| %>
-      <li class="collection-item">
-        <a href="/carraway/edit<%= post.path %>"><%= post.title %></a>
-      </li>
+      <tr>
+        <td><a href="/carraway/edit<%= post.path %>"><%= post.title %></a></td>
+        <td><%= post.created_at %></td>
+        <td><%= post.updated_at %></td>
+        <td><%= post.published_at %></td>
+      </tr>
     <% end %>
-  </ul>
+    </tbody>
+  </table>
 <% end %>

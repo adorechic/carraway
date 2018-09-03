@@ -84,7 +84,7 @@ module Carraway
       end
     end
 
-    attr_reader :title, :body, :path, :category, :created, :updated
+    attr_reader :title, :body, :path, :category, :created, :updated, :published
 
     def initialize(title:, body:, path:, category:, created:, updated:)
       @title = title
@@ -93,6 +93,13 @@ module Carraway
       @category = category
       @created = created
       @updated = updated
+    end
+
+    %i(created updated published).each do |col|
+      define_method("#{col}_at") do
+        at = send(col)
+        at && Time.at(at)
+      end
     end
 
     def assign(title:, body:)
