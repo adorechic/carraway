@@ -72,6 +72,26 @@ module Carraway
       redirect "/carraway/edit#{@post.path}"
     end
 
+    patch '/carraway/publish' do
+      @post = Post.find(params[:path])
+      # FIXME handle not found
+      @post.published = Time.now.to_i
+      # FIXME validation
+      @post.save
+      flash[:message] = 'Published'
+      redirect "/carraway/edit#{@post.path}"
+    end
+
+    patch '/carraway/unpublish' do
+      @post = Post.find(params[:path])
+      # FIXME handle not found
+      @post.published = nil
+      # FIXME validation
+      @post.save
+      flash[:message] = 'Unpublished'
+      redirect "/carraway/edit#{@post.path}"
+    end
+
     delete '/carraway/destroy' do
       @post = Post.find(params[:path]) # FIXME handle not found
       @post.destroy

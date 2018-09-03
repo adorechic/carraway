@@ -32,7 +32,8 @@ module Carraway
           path: category.fullpath(path),
           category: category,
           created: at.to_i,
-          updated: at.to_i
+          updated: at.to_i,
+          published: nil
         )
         post.save(at: at)
         post
@@ -46,7 +47,8 @@ module Carraway
             path: item['path'],
             category: Category.find(item['category']),
             created: Time.at(item['created']),
-            updated: Time.at(item['updated'])
+            updated: Time.at(item['updated']),
+            published: item['published'] && Time.at(item['published'])
           )
         end
       end
@@ -65,7 +67,8 @@ module Carraway
             path: item['path'],
             category: Category.find(item['category']),
             created: Time.at(item['created']),
-            updated: Time.at(item['updated'])
+            updated: Time.at(item['updated']),
+            published: item['published'] && Time.at(item['published'])
           )
         end
       end
@@ -84,15 +87,17 @@ module Carraway
       end
     end
 
-    attr_reader :title, :body, :path, :category, :created, :updated, :published
+    attr_reader :title, :body, :path, :category, :created, :updated
+    attr_accessor :published
 
-    def initialize(title:, body:, path:, category:, created:, updated:)
+    def initialize(title:, body:, path:, category:, created:, updated:, published:)
       @title = title
       @body = body
       @path = path
       @category = category
       @created = created
       @updated = updated
+      @published = published
     end
 
     %i(created updated published).each do |col|
@@ -131,6 +136,7 @@ module Carraway
         category: @category.key,
         created: @created.to_i,
         updated: @updated.to_i,
+        published: @published && @published.to_i
       }
     end
   end

@@ -33,6 +33,23 @@
     </div>
   </form>
   <a class="waves-effect waves-light btn blue" href="<%= "/carraway/preview#{@post.path}" %>" target="_blank">プレビュー</a>
+  <% if @post.published %>
+    <form action="/carraway/unpublish" method="POST" class="col s12">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="hidden" name="path" value="<%= @post.path %>">
+      <div class="col s6">
+        <button type="submit" class="waves-effect waves-light btn orange">非公開</button>
+      </div>
+    </form>
+  <% else %>
+    <form action="/carraway/publish" method="POST" class="col s12">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="hidden" name="path" value="<%= @post.path %>">
+      <div class="col s6">
+        <button type="submit" class="waves-effect waves-light btn orange">公開</button>
+      </div>
+    </form>
+  <% end %>
   <form action="/carraway/destroy" method="POST" class="col s12">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="path" value="<%= @post.path %>">
