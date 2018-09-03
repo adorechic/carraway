@@ -42,8 +42,12 @@ module Carraway
       def all(published_only: false)
         query = { table_name: Config.backend['table_name'] }
         if published_only
-          query[:filter_expression] = 'attribute_exists(published) AND (NOT attribute_type(published, :t))'
-          query[:expression_attribute_values] = { ':t' => 'NULL' }
+          query[:filter_expression] = <<~FILTER
+            attribute_exists(published)
+            AND (NOT attribute_type(published, :t))
+            AND published < :now
+          FILTER
+          query[:expression_attribute_values] = { ':t' => 'NULL', ':now' => Time.now.to_i }
         end
 
         client.scan(query).items.map do |item|
