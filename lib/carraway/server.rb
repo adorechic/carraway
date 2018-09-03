@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'rack/flash'
+require 'time'
 
 module Carraway
   class Server < Sinatra::Base
@@ -75,7 +76,14 @@ module Carraway
     patch '/carraway/publish' do
       @post = Post.find(params[:path])
       # FIXME handle not found
-      @post.published = Time.now.to_i
+      published =
+        if params[:published] && params[:published].size > 0
+          Time.parse(params[:published]).to_i
+        else
+          Time.now.to_i
+        end
+
+      @post.published = published
       # FIXME validation
       @post.save
       flash[:message] = 'Published'
