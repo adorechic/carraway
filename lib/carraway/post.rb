@@ -23,10 +23,15 @@ module Carraway
         client.delete_table(table_name: Config.backend['table_name'])
       end
 
+      def generate_uid
+        [Time.now.strftime('%Y%m%d%H%M%S'), "%05d" % rand(10000)].join.to_i
+      end
+
       def create(title:, path:, body:, category_key:, at: Time.now)
         category = Category.find(category_key)
         # FIXME check path to prevent overwriting
         post = new(
+          uid: generate_uid,
           title: title,
           body: body,
           path: category.fullpath(path),
@@ -52,6 +57,7 @@ module Carraway
 
         client.scan(query).items.map do |item|
           new(
+            uid: item['uid'],
             title: item['title'],
             body: item['body'],
             path: item['path'],
@@ -72,6 +78,7 @@ module Carraway
         ).item
         if item
           new(
+            uid: item['uid'],
             title: item['title'],
             body: item['body'],
             path: item['path'],
@@ -97,10 +104,11 @@ module Carraway
       end
     end
 
-    attr_reader :title, :body, :path, :category, :created, :updated
+    attr_reader :uid, :title, :body, :path, :category, :created, :updated
     attr_accessor :published
 
-    def initialize(title:, body:, path:, category:, created:, updated:, published:)
+    def initialize(uid:, title:, body:, path:, category:, created:, updated:, published:)
+      @uid = uid
       @title = title
       @body = body
       @path = path
@@ -140,6 +148,7 @@ module Carraway
 
     def to_h
       {
+        uid: @uid,
         title: @title,
         body: @body,
         path: @path,
