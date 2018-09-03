@@ -6,10 +6,10 @@ module Carraway
       def setup
         client.create_table(
           attribute_definitions: [
-            { attribute_name: :path, attribute_type: "S" },
+            { attribute_name: :uid, attribute_type: "S" },
           ],
           key_schema: [
-            { attribute_name: :path, key_type: "HASH" },
+            { attribute_name: :uid, key_type: "HASH" },
           ],
           provisioned_throughput: {
             read_capacity_units: 5, # FIXME configurable
@@ -24,17 +24,16 @@ module Carraway
       end
 
       def generate_uid
-        [Time.now.strftime('%Y%m%d%H%M%S'), "%05d" % rand(10000)].join.to_i
+        [Time.now.strftime('%Y%m%d%H%M%S'), "%05d" % rand(10000)].join
       end
 
-      def create(title:, path:, body:, category_key:, at: Time.now)
+      def create(title:, body:, category_key:, at: Time.now)
         category = Category.find(category_key)
         # FIXME check path to prevent overwriting
         post = new(
           uid: generate_uid,
           title: title,
           body: body,
-          path: category.fullpath(path),
           category: category,
           created: at.to_i,
           updated: at.to_i,
@@ -60,7 +59,6 @@ module Carraway
             uid: item['uid'],
             title: item['title'],
             body: item['body'],
-            path: item['path'],
             category: Category.find(item['category']),
             created: Time.at(item['created']),
             updated: Time.at(item['updated']),
@@ -69,10 +67,10 @@ module Carraway
         end
       end
 
-      def find(path)
+      def find(uid)
         item = client.get_item(
           key: {
-            path: path
+            uid: uid
           },
           table_name: Config.backend['table_name'],
         ).item
@@ -81,7 +79,6 @@ module Carraway
             uid: item['uid'],
             title: item['title'],
             body: item['body'],
-            path: item['path'],
             category: Category.find(item['category']),
             created: Time.at(item['created']),
             updated: Time.at(item['updated']),
@@ -104,14 +101,13 @@ module Carraway
       end
     end
 
-    attr_reader :uid, :title, :body, :path, :category, :created, :updated
+    attr_reader :uid, :title, :body, :category, :created, :updated
     attr_accessor :published
 
-    def initialize(uid:, title:, body:, path:, category:, created:, updated:, published:)
+    def initialize(uid:, title:, body:, category:, created:, updated:, published:)
       @uid = uid
       @title = title
       @body = body
-      @path = path
       @category = category
       @created = created
       @updated = updated
@@ -141,9 +137,13 @@ module Carraway
       self.class.client.delete_item(
         table_name: Config.backend['table_name'],
         key: {
-          path: @path
+          uid: @uid
         }
       )
+    end
+
+    def path
+      @category.fullpath(@uid)
     end
 
     def to_h
@@ -151,7 +151,7 @@ module Carraway
         uid: @uid,
         title: @title,
         body: @body,
-        path: @path,
+        path: path,
         category: @category.key,
         created: @created.to_i,
         updated: @updated.to_i,

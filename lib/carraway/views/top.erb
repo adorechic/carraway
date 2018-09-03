@@ -12,7 +12,7 @@
     <tbody>
     <% Array(@category_posts[category.key]).each do |post| %>
       <tr>
-        <td><a href="/carraway/edit<%= post.path %>"><%= post.title %></a></td>
+        <td><a href="/carraway/edit/<%= post.uid %>"><%= post.title %></a></td>
         <td><%= post.created_at %></td>
         <td><%= post.updated_at %></td>
         <td><%= post.published_at %></td>

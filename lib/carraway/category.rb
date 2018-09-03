@@ -25,8 +25,8 @@ module Carraway
       @dir = dir
     end
 
-    def fullpath(path)
-      [@dir, path].join
+    def fullpath(uid)
+      [@dir, uid].join
     end
   end
 end

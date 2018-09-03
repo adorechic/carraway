@@ -29,14 +29,14 @@ module Carraway
       erb :new
     end
 
-    get %r{/carraway/edit([\w\./]+)} do |path|
-      @post = Post.find(path)
+    get %r{/carraway/edit/(\d+)} do |uid|
+      @post = Post.find(uid)
       # FIXME handle not found
       erb :edit
     end
 
-    get %r{/carraway/preview([\w\./]+)} do |path|
-      @post = Post.find(path)
+    get %r{/carraway/preview/(\d+)} do |uid|
+      @post = Post.find(uid)
       # FIXME handle not found
 
       # Refresh GatsbyJS
@@ -52,16 +52,15 @@ module Carraway
     post '/carraway/' do
       @post = Post.create(
         title: params[:title],
-        path: params[:path],
         body: params[:body],
         category_key: params[:category]
       )
       flash[:message] = 'Created'
-      redirect "/carraway/edit#{@post.path}"
+      redirect "/carraway/edit/#{@post.uid}"
     end
 
     patch '/carraway/update' do
-      @post = Post.find(params[:path])
+      @post = Post.find(params[:uid])
       # FIXME handle not found
       @post.assign(
         title: params[:title],
@@ -70,11 +69,11 @@ module Carraway
       # FIXME validation
       @post.save
       flash[:message] = 'Updated'
-      redirect "/carraway/edit#{@post.path}"
+      redirect "/carraway/edit/#{@post.uid}"
     end
 
     patch '/carraway/publish' do
-      @post = Post.find(params[:path])
+      @post = Post.find(params[:uid])
       # FIXME handle not found
       published =
         if params[:published] && params[:published].size > 0
@@ -87,24 +86,24 @@ module Carraway
       # FIXME validation
       @post.save
       flash[:message] = 'Published'
-      redirect "/carraway/edit#{@post.path}"
+      redirect "/carraway/edit/#{@post.uid}"
     end
 
     patch '/carraway/unpublish' do
-      @post = Post.find(params[:path])
+      @post = Post.find(params[:uid])
       # FIXME handle not found
       @post.published = nil
       # FIXME validation
       @post.save
       flash[:message] = 'Unpublished'
-      redirect "/carraway/edit#{@post.path}"
+      redirect "/carraway/edit/#{@post.uid}"
     end
 
     delete '/carraway/destroy' do
-      @post = Post.find(params[:path]) # FIXME handle not found
+      @post = Post.find(params[:uid]) # FIXME handle not found
       @post.destroy
-      flash[:message] = "Deleted #{@post.path}"
-      redirect "/carraway"
+      flash[:message] = "Deleted #{@post.uid}"
+      redirect "/carraway/"
     end
   end
 end

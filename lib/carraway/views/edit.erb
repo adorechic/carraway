@@ -14,7 +14,7 @@
             <td><%= @post.category.title %></td>
             <td>
               <%= @post.path %>
-              <input type="hidden" name="path" value="<%= @post.path %>">
+              <input type="hidden" name="uid" value="<%= @post.uid %>">
             </td>
           </tr>
         </tbody>
@@ -32,11 +32,11 @@
       <button type="submit" class="waves-effect waves-light btn">保存</button>
     </div>
   </form>
-  <a class="waves-effect waves-light btn blue" href="<%= "/carraway/preview#{@post.path}" %>" target="_blank">プレビュー</a>
+  <a class="waves-effect waves-light btn blue" href="<%= "/carraway/preview/#{@post.uid}" %>" target="_blank">プレビュー</a>
   <% if @post.published %>
     <form action="/carraway/unpublish" method="POST" class="col s12">
       <input type="hidden" name="_method" value="PATCH">
-      <input type="hidden" name="path" value="<%= @post.path %>">
+      <input type="hidden" name="uid" value="<%= @post.uid %>">
       <div class="col s6">
         <button type="submit" class="waves-effect waves-light btn orange">非公開</button>
       </div>
@@ -44,7 +44,7 @@
   <% else %>
     <form action="/carraway/publish" method="POST" class="col s12">
       <input type="hidden" name="_method" value="PATCH">
-      <input type="hidden" name="path" value="<%= @post.path %>">
+      <input type="hidden" name="uid" value="<%= @post.uid %>">
       <div class="input-field col s12">
         <input type="text" id="published" name="published" value="<%= @post.published_at %>" placeholder="2018-09-01 12:00:00">
         <label for="published">公開日</label>
@@ -56,7 +56,7 @@
   <% end %>
   <form action="/carraway/destroy" method="POST" class="col s12">
     <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="path" value="<%= @post.path %>">
+    <input type="hidden" name="uid" value="<%= @post.uid %>">
     <div class="col s6">
       <button type="submit" class="waves-effect waves-light btn red">削除</button>
     </div>
