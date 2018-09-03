@@ -20,7 +20,7 @@ module Carraway
     end
 
     get '/carraway/api/posts' do
-      posts = Post.all.map(&:to_h)
+      posts = Post.all(published_only: true).map(&:to_h)
       { data: { posts: posts } }.to_json
     end
 

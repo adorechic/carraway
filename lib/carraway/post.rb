@@ -39,8 +39,14 @@ module Carraway
         post
       end
 
-      def all
-        client.scan(table_name: Config.backend['table_name']).items.map do |item|
+      def all(published_only: false)
+        query = { table_name: Config.backend['table_name'] }
+        if published_only
+          query[:filter_expression] = 'attribute_exists(published) AND (NOT attribute_type(published, :t))'
+          query[:expression_attribute_values] = { ':t' => 'NULL' }
+        end
+
+        client.scan(query).items.map do |item|
           new(
             title: item['title'],
             body: item['body'],
