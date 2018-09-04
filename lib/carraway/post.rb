@@ -47,11 +47,17 @@ module Carraway
         query = { table_name: Config.backend['table_name'] }
         if published_only
           query[:filter_expression] = <<~FILTER
-            attribute_exists(published)
+            record_type = :type
+            AND attribute_exists(published)
             AND (NOT attribute_type(published, :t))
             AND published < :now
           FILTER
-          query[:expression_attribute_values] = { ':t' => 'NULL', ':now' => Time.now.to_i }
+          query[:expression_attribute_values] = { ':t' => 'NULL', ':now' => Time.now.to_i, ':type' => 'post' }
+        else
+          query[:filter_expression] = <<~FILTER
+            record_type = :type
+          FILTER
+          query[:expression_attribute_values] = { ':type' => 'post' }
         end
 
         client.scan(query).items.map do |item|
