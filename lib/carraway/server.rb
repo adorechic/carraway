@@ -31,6 +31,7 @@ module Carraway
 
     get %r{/carraway/edit/(\d+)} do |uid|
       @post = Post.find(uid)
+      @files = File.all
       # FIXME handle not found
       erb :edit
     end
