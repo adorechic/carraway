@@ -32,34 +32,7 @@
       <button type="submit" class="waves-effect waves-light btn">保存</button>
     </div>
   </form>
-  <a class="waves-effect waves-light btn modal-trigger" href="#file-modal">ファイルをリンク</a>
-  <div id="file-modal" class="modal">
-    <div class="modal-content">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>タイトル</th>
-            <th>作成日</th>
-            <th>パス</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @files.each do |file| %>
-            <tr>
-              <td><button onclick="useFile('<%= file.title %>', '<%= file.path%>')">使う</button></td>
-              <td><%= file.title %></td>
-              <td><%= file.created_at %></td>
-              <td><%= file.path %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
-    </div>
-  </div>
+  <%= erb :file_modal, layout: false %>
 
   <a class="waves-effect waves-light btn blue" href="<%= "/carraway/preview/#{@post.uid}" %>" target="_blank">プレビュー</a>
   <% if @post.published %>
@@ -91,14 +64,3 @@
     </div>
   </form>
 </div>
-<script>
- var useFile = function(title, path) {
-   var body = document.getElementById('body');
-   body.value = body.value + '[' + title + '](/' + path + ')'
- }
-
- document.addEventListener('DOMContentLoaded', function() {
-   var elems = document.querySelectorAll('.modal');
-   var instances = M.Modal.init(elems);
- });
-</script>

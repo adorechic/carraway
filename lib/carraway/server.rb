@@ -26,6 +26,7 @@ module Carraway
     end
 
     get '/carraway/new' do
+      @files = File.all
       erb :new
     end
 
