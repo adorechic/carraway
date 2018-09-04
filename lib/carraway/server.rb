@@ -105,5 +105,9 @@ module Carraway
       flash[:message] = "Deleted #{@post.uid}"
       redirect "/carraway/"
     end
+
+    get '/carraway/files' do
+      erb :files
+    end
   end
 end
