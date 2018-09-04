@@ -5,7 +5,7 @@ require 'time'
 
 module Carraway
   class Server < Sinatra::Base
-    set :views, File.expand_path('../views', __FILE__)
+    set :views, ::File.expand_path('../views', __FILE__)
     set :method_override, true
     enable :sessions
     use Rack::Flash
@@ -107,7 +107,15 @@ module Carraway
     end
 
     get '/carraway/files' do
+      @files = File.all
       erb :files
+    end
+
+    post '/carraway/files' do
+      file = File.new(title: params[:title], file: params[:file])
+      file.save # FIXME validation and error
+      flash[:message] = "Saved #{file.path}"
+      redirect "/carraway/files"
     end
   end
 end

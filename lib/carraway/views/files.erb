@@ -1,1 +1,34 @@
 <h3>Files</h3>
+<div class="row">
+  <form action="/carraway/files" method="POST" class="col s12" enctype="multipart/form-data">
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text" id="title" name="title" placeholder="ファイルタイトル">
+        <label for="title">ファイルタイトル</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="file" id="file" name="file" placeholder="ファイル">
+      </div>
+    </div>
+
+    <button type="submit" class="waves-effect waves-light btn">保存</button>
+  </form>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>作成日</th>
+      <th>パス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @files.each do |file| %>
+      <tr>
+        <td><%= file.title %></td>
+        <td><%= file.created_at %></td>
+        <td><%= file.path %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

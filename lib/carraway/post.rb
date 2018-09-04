@@ -152,6 +152,7 @@ module Carraway
         title: @title,
         body: @body,
         path: path,
+        record_type: 'post',
         category: @category.key,
         created: @created.to_i,
         updated: @updated.to_i,

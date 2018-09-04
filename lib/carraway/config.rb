@@ -19,6 +19,10 @@ module Carraway
       def gatsby_endpoint
         @config['gatsby_endpoint'] || 'http://localhost:8000'
       end
+
+      def file_backend
+        @config['file_backend']
+      end
     end
   end
 end
