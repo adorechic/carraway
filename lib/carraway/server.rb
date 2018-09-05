@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'rack/flash'
+require 'redcarpet'
 require 'time'
 
 module Carraway
@@ -22,6 +23,14 @@ module Carraway
 
     get '/carraway/api/posts' do
       posts = Post.all(published_only: true).map(&:to_h)
+
+      # HACK Expand plugin
+      transformed = params[:view] == 'html'
+      if transformed
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+        posts = posts.map { |post| post[:body] = markdown.render(post[:body]); post }
+      end
+
       { data: { posts: posts } }.to_json
     end
 
