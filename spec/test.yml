@@ -1,0 +1,4 @@
+categories:
+  test_category: 'category-path'
+backend:
+  table_name: 'test_table'
