@@ -1,4 +1,6 @@
 categories:
-  test_category: 'category-path'
+  test_category:
+    title: 'カテゴリータイトル'
+    dir: 'category-path'
 backend:
   table_name: 'test_table'
