@@ -18,6 +18,9 @@ module Carraway
     get '/carraway/' do
       @categories = Category.all
       @category_posts = Post.all.group_by {|post| post.category.key }
+      @category_posts.each do |category, posts|
+        posts.sort_by!(&:updated).reverse!
+      end
       erb :top
     end
 
