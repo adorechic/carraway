@@ -3,11 +3,11 @@ RSpec.describe Carraway::Config do
     described_class.load('spec/test.yml')
   end
 
-  it 'returns backend' do
-    expect(
-      described_class.backend
-    ).to eq(
-           'table_name' => 'test_table'
-         )
+  describe '.backend' do
+    subject { described_class.backend }
+
+    it do
+      is_expected.to eq('table_name' => 'test_table')
+    end
   end
 end
