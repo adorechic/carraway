@@ -10,4 +10,28 @@ RSpec.describe Carraway::Config do
       is_expected.to eq('table_name' => 'test_table')
     end
   end
+
+  describe '.port' do
+    subject { described_class.port }
+
+    it do
+      is_expected.to eq(5000)
+    end
+  end
+
+  describe '.gatsby_endpoint' do
+    subject { described_class.gatsby_endpoint }
+
+    it do
+      is_expected.to eq('http://localhost:8000')
+    end
+  end
+
+  describe '.file_backend' do
+    subject { described_class.file_backend }
+
+    it do
+      is_expected.to be_nil
+    end
+  end
 end
