@@ -7,7 +7,12 @@ RSpec.describe Carraway::Config do
     subject { described_class.backend }
 
     it do
-      is_expected.to eq('table_name' => 'test_table')
+      expected = {
+        'table_name' => 'test_table',
+        'endpoint' => 'http://localhost:6000',
+        'region' => 'dummy'
+      }
+      is_expected.to eq(expected)
     end
   end
 

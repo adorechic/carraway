@@ -3,7 +3,7 @@ services:
   dynamodb:
     image: amazon/dynamodb-local
     ports:
-      - '8000:8000'
-    command: -jar DynamoDBLocal.jar -dbPath /var/lib/dynamodb
+      - '6000:6000'
+    command: -jar DynamoDBLocal.jar -dbPath /var/lib/dynamodb -port 6000
     volumes:
       - /tmp:/var/lib/dynamodb

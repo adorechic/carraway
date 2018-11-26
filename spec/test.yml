@@ -3,4 +3,6 @@ categories:
     title: 'カテゴリータイトル'
     dir: 'category-path'
 backend:
-  table_name: 'test_table'
+  table_name: test_table
+  endpoint: http://localhost:6000
+  region: dummy
