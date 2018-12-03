@@ -91,4 +91,23 @@ RSpec.describe Carraway::Post do
       expect(post.path).to eq(category.fullpath(post.uid))
     end
   end
+
+  describe '#to_h' do
+    let(:post) do
+      described_class.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
+
+    it 'returns hash describing' do
+      expect(
+        post.to_h.slice(:title, :body)
+      ).to eq(
+             title: 'Post title',
+             body: 'This is an article.'
+           )
+    end
+  end
 end
