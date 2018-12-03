@@ -74,4 +74,21 @@ RSpec.describe Carraway::Post do
       expect(described_class.all).to eq([])
     end
   end
+
+  describe '#path' do
+    let(:post) do
+      described_class.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
+    let(:category) do
+      Carraway::Category.find('test_category')
+    end
+
+    it 'returns http path' do
+      expect(post.path).to eq(category.fullpath(post.uid))
+    end
+  end
 end

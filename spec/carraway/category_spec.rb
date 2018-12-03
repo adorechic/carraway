@@ -21,4 +21,15 @@ RSpec.describe Carraway::Category do
       expect(category.key).to eq('test_category')
     end
   end
+
+  describe '#fullpath' do
+    let(:category) do
+      described_class.find('test_category')
+    end
+
+    it 'returns fullpath' do
+      # FIXME this requres optional delimiter?
+      expect(category.fullpath('uid')).to eq('category-pathuid')
+    end
+  end
 end
