@@ -48,5 +48,14 @@ RSpec.describe Carraway::Post do
       expect(persisted.title).to eq('New title')
       expect(persisted.body).to eq('New body')
     end
+
+    it 'updates timestamp' do
+      current = Time.now
+
+      post.save(at: current)
+
+      expect(post.updated).to eq(current.to_i)
+      expect(post.updated_at.to_s).to eq(current.to_s)
+    end
   end
 end
