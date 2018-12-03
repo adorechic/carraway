@@ -58,4 +58,20 @@ RSpec.describe Carraway::Post do
       expect(post.updated_at.to_s).to eq(current.to_s)
     end
   end
+
+  describe '#destroy' do
+    let(:post) do
+      described_class.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
+
+    it 'removes an post' do
+      post.destroy
+
+      expect(described_class.all).to eq([])
+    end
+  end
 end
