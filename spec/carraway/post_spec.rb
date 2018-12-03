@@ -8,7 +8,7 @@ RSpec.describe Carraway::Post do
   end
 
   describe '.create' do
-    it do
+    it 'persists a new post' do
       created = described_class.create(
         title: 'Post title',
         body: 'This is an article.',
@@ -28,6 +28,25 @@ RSpec.describe Carraway::Post do
       expect(found.title).to eq(created.title)
       expect(found.body).to eq(created.body)
       expect(found.published).to eq(nil)
+    end
+  end
+
+  describe '#save' do
+    let(:post) do
+      described_class.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
+
+    it 'updates persited post' do
+      post.assign(title: 'New title', body: 'New body')
+      post.save
+
+      persisted = described_class.find(post.uid)
+      expect(persisted.title).to eq('New title')
+      expect(persisted.body).to eq('New body')
     end
   end
 end
