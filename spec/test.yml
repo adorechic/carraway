@@ -6,3 +6,5 @@ backend:
   table_name: test_table
   endpoint: http://localhost:6000
   region: dummy
+file_backend:
+  bucket: test

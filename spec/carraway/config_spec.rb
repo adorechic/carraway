@@ -36,7 +36,7 @@ RSpec.describe Carraway::Config do
     subject { described_class.file_backend }
 
     it do
-      is_expected.to be_nil
+      is_expected.to eq('bucket' => 'test')
     end
   end
 end
