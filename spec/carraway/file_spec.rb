@@ -27,6 +27,12 @@ RSpec.describe Carraway::File do
       file.save
 
       expect(Carraway::File.all.size).to eq(1)
+
+      found = Carraway::File.all.first
+      expect(found.title).to eq('Title')
+      expect(found.uid).to_not be_nil
+      expect(found.created_at).to_not be_nil
+      expect(found.path).to be_end_with("/#{found.uid}.pdf")
     end
   end
 end
