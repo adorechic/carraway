@@ -27,7 +27,7 @@ module Carraway
         [Time.now.strftime('%Y%m%d%H%M%S'), "%05d" % rand(10000)].join
       end
 
-      def create(title:, body:, category_key:, at: Time.now)
+      def create(title:, body:, category_key:, at: Time.now, published: nil)
         category = Category.find(category_key)
         # FIXME check path to prevent overwriting
         post = new(
@@ -37,7 +37,7 @@ module Carraway
           category: category,
           created: at.to_i,
           updated: at.to_i,
-          published: nil
+          published: published
         )
         post.save(at: at)
         post
