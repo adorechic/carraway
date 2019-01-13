@@ -2,7 +2,6 @@ require 'spec_helper'
 
 RSpec.describe Carraway::Server, type: :request do
   before do
-    Carraway::Config.load('spec/test.yml')
     Carraway::Post.setup
   end
 

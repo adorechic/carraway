@@ -24,4 +24,8 @@ RSpec.configure do |config|
   end
 
   config.include RSpecMixin, type: :request
+
+  config.before(:suite) do
+    Carraway::Config.load('spec/test.yml')
+  end
 end

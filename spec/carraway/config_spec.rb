@@ -1,8 +1,4 @@
 RSpec.describe Carraway::Config do
-  before do
-    described_class.load('spec/test.yml')
-  end
-
   describe '.backend' do
     subject { described_class.backend }
 
