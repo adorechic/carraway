@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "carraway"
 require "rack/test"
+require 'webmock/rspec'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -27,5 +28,8 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     Carraway::Config.load('spec/test.yml')
+    WebMock.disable_net_connect!(
+      allow: Carraway::Config.backend['endpoint']
+    )
   end
 end

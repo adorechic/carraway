@@ -152,4 +152,28 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
   end
+
+  context 'GET /carraway/preview/:id' do
+    let!(:post) do
+      Carraway::Post.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
+
+    before do
+      stub_request(
+        :post,
+        [Carraway::Config.gatsby_endpoint, '/__refresh'].join
+      )
+    end
+
+    it do
+      get "/carraway/preview/#{post.uid}"
+
+      expect(last_response).to be_redirect
+      expect(last_response.header["Location"]).to be_end_with(post.path)
+    end
+  end
 end
