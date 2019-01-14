@@ -176,4 +176,25 @@ RSpec.describe Carraway::Server, type: :request do
       expect(last_response.header["Location"]).to be_end_with(post.path)
     end
   end
+
+  context 'POST /carraway/' do
+    let(:params) do
+      {
+        title: 'Post title',
+        body: 'Article Body',
+        category: 'test_category'
+      }
+    end
+
+    it do
+      post "/carraway/", params
+
+      expect(last_response).to be_redirect
+
+      expect(Carraway::Post.all.size).to eq(1)
+      post = Carraway::Post.all.first
+      expect(post.title).to eq(params[:title])
+      expect(last_response.header["Location"]).to be_end_with(post.uid)
+    end
+  end
 end
