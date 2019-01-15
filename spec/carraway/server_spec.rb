@@ -226,4 +226,50 @@ RSpec.describe Carraway::Server, type: :request do
 
     end
   end
+
+  context 'PATCH /carraway/publish' do
+    let!(:post) do
+      Carraway::Post.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
+
+    let(:params) do
+      {
+        uid: post.uid
+      }
+    end
+
+    it do
+      patch '/carraway/publish', params
+
+      expect(last_response).to be_redirect
+
+      saved_post = Carraway::Post.find(post.uid)
+      expect(saved_post.published).to_not eq(nil)
+      expect(last_response.header["Location"]).to be_end_with(post.uid)
+    end
+
+    context 'given published time' do
+      let(:published_at) { Time.new(2019, 1, 2, 12) }
+
+      before do
+        params[:published] = published_at.to_s
+      end
+
+      it do
+        patch '/carraway/publish', params
+
+        expect(last_response).to be_redirect
+
+        saved_post = Carraway::Post.find(post.uid)
+        expect(saved_post.published).to_not eq(nil)
+        expect(saved_post.published_at).to eq(published_at)
+        expect(last_response.header["Location"]).to be_end_with(post.uid)
+      end
+
+    end
+  end
 end
