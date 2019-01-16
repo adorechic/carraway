@@ -153,7 +153,7 @@ RSpec.describe Carraway::Server, type: :request do
 
   end
 
-  context 'GET /carraway/preview/:id' do
+  describe 'GET /carraway/preview/:id' do
     let!(:post) do
       Carraway::Post.create(
         title: 'Post title',
@@ -177,7 +177,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
   end
 
-  context 'POST /carraway/' do
+  describe 'POST /carraway/' do
     let(:params) do
       {
         title: 'Post title',
@@ -198,7 +198,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
   end
 
-  context 'PATCH /carraway/update' do
+  describe 'PATCH /carraway/update' do
     let!(:post) do
       Carraway::Post.create(
         title: 'Post title',
@@ -227,7 +227,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
   end
 
-  context 'PATCH /carraway/publish' do
+  describe 'PATCH /carraway/publish' do
     let!(:post) do
       Carraway::Post.create(
         title: 'Post title',
@@ -272,7 +272,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
   end
 
-  context 'PATCH /carraway/unpublish' do
+  describe 'PATCH /carraway/unpublish' do
     let!(:post) do
       Carraway::Post.create(
         title: 'Post title',
