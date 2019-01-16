@@ -298,4 +298,28 @@ RSpec.describe Carraway::Server, type: :request do
       expect(last_response.header["Location"]).to be_end_with(post.uid)
     end
   end
+
+  describe 'DELETE /carraway/destroy' do
+    let!(:post) do
+      Carraway::Post.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category',
+      )
+    end
+
+    let(:params) do
+      {
+        uid: post.uid
+      }
+    end
+
+    it do
+      delete '/carraway/destroy', params
+
+      expect(last_response).to be_redirect
+      expect(last_response.header["Location"]).to be_end_with('/carraway/')
+      expect(Carraway::Post.find(post.uid)).to eq(nil)
+    end
+  end
 end
