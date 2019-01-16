@@ -322,4 +322,27 @@ RSpec.describe Carraway::Server, type: :request do
       expect(Carraway::Post.find(post.uid)).to eq(nil)
     end
   end
+
+  describe 'GET /carraway/files' do
+    let(:file) do
+      Carraway::File.new(
+        title: 'Title',
+        file: { tempfile: '' }
+      )
+    end
+
+    before do
+      # FIXME Do not use allow_any_instance_of
+      s3_client = Aws::S3::Client.new(stub_responses: true)
+      s3_client.stub_responses(:put_object, true)
+      allow_any_instance_of(Carraway::File).to receive(:s3_client).and_return(s3_client)
+      file.save
+    end
+
+    it do
+      get "/carraway/files"
+      expect(last_response).to be_ok
+      expect(last_response.body).to include(file.path)
+    end
+  end
 end
