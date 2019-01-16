@@ -345,4 +345,31 @@ RSpec.describe Carraway::Server, type: :request do
       expect(last_response.body).to include(file.path)
     end
   end
+
+  describe 'POST /carraway/files' do
+    let(:params) do
+      {
+        title: 'File title',
+        file: { tempfile: '' }
+      }
+    end
+
+    before do
+      # FIXME Do not use allow_any_instance_of
+      s3_client = Aws::S3::Client.new(stub_responses: true)
+      s3_client.stub_responses(:put_object, true)
+      allow_any_instance_of(Carraway::File).to receive(:s3_client).and_return(s3_client)
+    end
+
+    it do
+      post '/carraway/files', params
+
+      expect(last_response).to be_redirect
+      expect(last_response.header["Location"]).to be_end_with('/carraway/files')
+
+      expect(Carraway::File.all.size).to eq(1)
+      file = Carraway::File.all.last
+      expect(file.title).to eq('File title')
+    end
+  end
 end
