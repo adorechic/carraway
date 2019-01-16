@@ -269,7 +269,33 @@ RSpec.describe Carraway::Server, type: :request do
         expect(saved_post.published_at).to eq(published_at)
         expect(last_response.header["Location"]).to be_end_with(post.uid)
       end
+    end
+  end
 
+  context 'PATCH /carraway/unpublish' do
+    let!(:post) do
+      Carraway::Post.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category',
+        published: Time.now.to_i
+      )
+    end
+
+    let(:params) do
+      {
+        uid: post.uid
+      }
+    end
+
+    it do
+      patch '/carraway/unpublish', params
+
+      expect(last_response).to be_redirect
+
+      saved_post = Carraway::Post.find(post.uid)
+      expect(saved_post.published).to eq(nil)
+      expect(last_response.header["Location"]).to be_end_with(post.uid)
     end
   end
 end
