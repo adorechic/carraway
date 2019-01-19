@@ -61,6 +61,7 @@ module Carraway
 
     def path
       ext = '.pdf' # FIXME Accept other type
+      # Seems prefix does not have to required parameter
       [Config.file_backend['prefix'], '/', @uid, ext].join
     end
 
