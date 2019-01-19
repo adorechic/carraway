@@ -1,8 +1,15 @@
 # Carraway [![Build Status](https://travis-ci.org/adorechic/carraway.svg?branch=master)](https://travis-ci.org/adorechic/carraway) [![Maintainability](https://api.codeclimate.com/v1/badges/0c6800daedd07274f11c/maintainability)](https://codeclimate.com/github/adorechic/carraway/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/0c6800daedd07274f11c/test_coverage)](https://codeclimate.com/github/adorechic/carraway/test_coverage)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/carraway`. To experiment with that code, run `bin/console` for an interactive prompt.
+Carraway is a lightweight CMS backend for [Gatsby](https://www.gatsbyjs.org/).
 
-TODO: Delete this and the text above, and describe your gem
+Carraway provides
+- Web console to edit contents
+- Web preview for contents on Gatsby
+- REST API for Gatsby to integrate with Carraway
+
+[gatsby-source-carraway](https://github.com/adorechic/gatsby-source-carraway) is a source plugin for Gatsby to integrate with Carraway.
+
+Carraway is required on Gatsby build and contents editting, so you don't have to keep running Carraway process.
 
 ## Installation
 
@@ -21,8 +28,52 @@ Or install it yourself as:
     $ gem install carraway
 
 ## Usage
+Put carraway.yml
 
-TODO: Write usage instructions here
+```yaml
+backend:
+  table_name: 'carraway_table' # If you use DynamoDB Local, set endpoint option
+file_backend:
+  bucket: 'carraway_bucket'
+  prefix: 'files'
+categories:
+  category_key:
+    title: 'Category Name'
+    dir: '/category/path'
+```
+
+Create DynamoDB table.
+
+```
+carraway setup
+
+# You can use different config file name
+# carrway setup -c your_config.yml
+```
+
+Run carrway
+
+```
+carraway start
+```
+
+## Configuration
+
+```yaml
+port: 5000 # Optional. Defailt port is 5000
+gatsby_endpoint: 'http://localhost:8000' # Optional. Default is http://localhost:8000
+backend: # Required
+  table_name: 'carraway_table' # Required.
+  endpoint: http://localhost:6000 # Optional. Set if you use DynamoDB Local
+  region: ap-northeast-1 # Optional.
+file_backend:
+  bucket: 'carraway_bucket' # Required
+  prefix: 'files' # Required.
+categories: # Least one category is required
+  category_key:
+    title: 'Category Name'
+    dir: '/category/path'
+```
 
 ## Development
 
