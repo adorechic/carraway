@@ -27,9 +27,10 @@ RSpec.describe Carraway::File do
     it do
       file.save
 
-      expect(Carraway::File.all.size).to eq(1)
+      repository = Carraway::FileRepository.new
+      expect(repository.all.size).to eq(1)
 
-      found = Carraway::File.all.first
+      found = repository.all.first
       expect(found.title).to eq('Title')
       expect(found.uid).to_not be_nil
       expect(found.created_at).to_not be_nil

@@ -4,22 +4,6 @@ require 'aws-sdk-s3'
 module Carraway
   class File
     class << self
-      def all
-        query = { table_name: Config.backend['table_name'] }
-        query[:filter_expression] = <<~FILTER
-          record_type = :type
-        FILTER
-        query[:expression_attribute_values] = { ':type' => 'file' }
-
-        dynamo_client.scan(query).items.map do |item|
-          new(
-            uid: item['uid'],
-            title: item['title'],
-            created: item['created']
-          )
-        end
-      end
-
       def dynamo_client
         if Config.backend['endpoint']
           Aws::DynamoDB::Client.new(
