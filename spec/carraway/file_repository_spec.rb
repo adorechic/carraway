@@ -19,20 +19,23 @@ RSpec.describe Carraway::FileRepository do
       )
     end
 
+    let(:repository) { described_class.new }
+
     before do
-      # FIXME Do not use allow_any_instance_of
+      # FIXME DRY
       s3_client = Aws::S3::Client.new(stub_responses: true)
       s3_client.stub_responses(:put_object, true)
-      allow_any_instance_of(Carraway::File).to receive(:s3_client).and_return(s3_client)
-      file.save
+      allow(repository).to receive(:s3_client).and_return(s3_client)
+      repository.save(file)
     end
 
     it 'returns file' do
-      repository = described_class.new
       expect(repository.all.size).to eq(1)
 
       found = repository.all.first
       expect(found.title).to eq('Title')
+      expect(found.uid).to_not be_nil
+      expect(found.created_at).to_not be_nil
     end
   end
 end

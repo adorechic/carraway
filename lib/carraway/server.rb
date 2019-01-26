@@ -127,7 +127,8 @@ module Carraway
 
     post '/carraway/files' do
       file = File.new(title: params[:title], file: params[:file])
-      file.save # FIXME validation and error
+      # FIXME validation and error
+      FileRepository.new.save(file)
       flash[:message] = "Saved #{file.path}"
       redirect "/carraway/files"
     end
