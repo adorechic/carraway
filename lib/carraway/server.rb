@@ -38,13 +38,13 @@ module Carraway
     end
 
     get '/carraway/new' do
-      @files = File.all
+      @files = FileRepository.new.all
       erb :new
     end
 
     get %r{/carraway/edit/(\d+)} do |uid|
       @post = Post.find(uid)
-      @files = File.all
+      @files = FileRepository.new.all
       # FIXME handle not found
       erb :edit
     end
@@ -121,13 +121,14 @@ module Carraway
     end
 
     get '/carraway/files' do
-      @files = File.all
+      @files = FileRepository.new.all
       erb :files
     end
 
     post '/carraway/files' do
       file = File.new(title: params[:title], file: params[:file])
-      file.save # FIXME validation and error
+      # FIXME validation and error
+      FileRepository.new.save(file)
       flash[:message] = "Saved #{file.path}"
       redirect "/carraway/files"
     end

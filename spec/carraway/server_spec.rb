@@ -102,11 +102,12 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     before do
-      # FIXME Do not use allow_any_instance_of
+      # FIXME DRY
       s3_client = Aws::S3::Client.new(stub_responses: true)
       s3_client.stub_responses(:put_object, true)
-      allow_any_instance_of(Carraway::File).to receive(:s3_client).and_return(s3_client)
-      file.save
+      repository = Carraway::FileRepository.new
+      allow(repository).to receive(:s3_client).and_return(s3_client)
+      repository.save(file)
     end
 
     it do
@@ -137,11 +138,12 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     before do
-      # FIXME Do not use allow_any_instance_of
+      # FIXME DRY
       s3_client = Aws::S3::Client.new(stub_responses: true)
       s3_client.stub_responses(:put_object, true)
-      allow_any_instance_of(Carraway::File).to receive(:s3_client).and_return(s3_client)
-      file.save
+      repository = Carraway::FileRepository.new
+      allow(repository).to receive(:s3_client).and_return(s3_client)
+      repository.save(file)
     end
 
     it do
@@ -332,11 +334,12 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     before do
-      # FIXME Do not use allow_any_instance_of
+      # FIXME DRY
       s3_client = Aws::S3::Client.new(stub_responses: true)
       s3_client.stub_responses(:put_object, true)
-      allow_any_instance_of(Carraway::File).to receive(:s3_client).and_return(s3_client)
-      file.save
+      repository = Carraway::FileRepository.new
+      allow(repository).to receive(:s3_client).and_return(s3_client)
+      repository.save(file)
     end
 
     it do
@@ -358,7 +361,7 @@ RSpec.describe Carraway::Server, type: :request do
       # FIXME Do not use allow_any_instance_of
       s3_client = Aws::S3::Client.new(stub_responses: true)
       s3_client.stub_responses(:put_object, true)
-      allow_any_instance_of(Carraway::File).to receive(:s3_client).and_return(s3_client)
+      allow_any_instance_of(Carraway::FileRepository).to receive(:s3_client).and_return(s3_client)
     end
 
     it do
@@ -367,8 +370,9 @@ RSpec.describe Carraway::Server, type: :request do
       expect(last_response).to be_redirect
       expect(last_response.header["Location"]).to be_end_with('/carraway/files')
 
-      expect(Carraway::File.all.size).to eq(1)
-      file = Carraway::File.all.last
+      repository = Carraway::FileRepository.new
+      expect(repository.all.size).to eq(1)
+      file = repository.all.last
       expect(file.title).to eq('File title')
     end
   end
