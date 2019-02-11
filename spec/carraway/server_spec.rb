@@ -91,6 +91,24 @@ RSpec.describe Carraway::Server, type: :request do
         BODY
       end
     end
+
+    context 'with label' do
+      before do
+        post.labels = %w(poem)
+        post.save
+      end
+
+      it 'returns published posts' do
+        get '/carraway/api/posts?view=html'
+        expect(last_response).to be_ok
+
+        json = JSON.parse(last_response.body)
+
+        expect(json['data']['posts'].size).to eq(1)
+        post_response = json['data']['posts'].first
+        expect(post_response['labels']).to eq(%w(poem))
+      end
+    end
   end
 
   describe 'GET /carraway/new' do
@@ -196,7 +214,24 @@ RSpec.describe Carraway::Server, type: :request do
       expect(Carraway::Post.all.size).to eq(1)
       post = Carraway::Post.all.first
       expect(post.title).to eq(params[:title])
+      expect(post.labels).to eq(nil)
       expect(last_response.header["Location"]).to be_end_with(post.uid)
+    end
+
+    context 'with valid label' do
+      before do
+        params[:labels] = %w(poem)
+      end
+
+      it do
+        post "/carraway/", params
+
+        expect(last_response).to be_redirect
+
+        expect(Carraway::Post.all.size).to eq(1)
+        post = Carraway::Post.all.first
+        expect(post.labels).to eq(%w(poem))
+      end
     end
   end
 

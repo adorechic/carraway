@@ -23,6 +23,10 @@ module Carraway
       def file_backend
         @config['file_backend']
       end
+
+      def labels
+        @config['labels'] || {}
+      end
     end
   end
 end

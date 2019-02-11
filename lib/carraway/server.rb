@@ -67,7 +67,8 @@ module Carraway
       @post = Post.create(
         title: params[:title],
         body: params[:body],
-        category_key: params[:category]
+        category_key: params[:category],
+        labels: params[:labels],
       )
       flash[:message] = 'Created'
       redirect "/carraway/edit/#{@post.uid}"
@@ -78,7 +79,8 @@ module Carraway
       # FIXME handle not found
       @post.assign(
         title: params[:title],
-        body: params[:body]
+        body: params[:body],
+        labels: params[:labels],
       )
       # FIXME validation
       @post.save

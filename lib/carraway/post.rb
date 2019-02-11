@@ -27,7 +27,7 @@ module Carraway
         [Time.now.strftime('%Y%m%d%H%M%S'), "%05d" % rand(10000)].join
       end
 
-      def create(title:, body:, category_key:, at: Time.now, published: nil)
+      def create(title:, body:, category_key:, at: Time.now, published: nil, labels: nil)
         category = Category.find(category_key)
         # FIXME check path to prevent overwriting
         post = new(
@@ -35,6 +35,7 @@ module Carraway
           title: title,
           body: body,
           category: category,
+          labels: labels,
           created: at.to_i,
           updated: at.to_i,
           published: published
@@ -65,6 +66,7 @@ module Carraway
             uid: item['uid'],
             title: item['title'],
             body: item['body'],
+            labels: item['labels'],
             category: Category.find(item['category']),
             created: Time.at(item['created']),
             updated: Time.at(item['updated']),
@@ -85,6 +87,7 @@ module Carraway
             uid: item['uid'],
             title: item['title'],
             body: item['body'],
+            labels: item['labels'],
             category: Category.find(item['category']),
             created: Time.at(item['created']),
             updated: Time.at(item['updated']),
@@ -108,13 +111,14 @@ module Carraway
     end
 
     attr_reader :uid, :title, :body, :category, :created, :updated
-    attr_accessor :published
+    attr_accessor :published, :labels
 
-    def initialize(uid:, title:, body:, category:, created:, updated:, published:)
+    def initialize(uid:, title:, body:, category:, created:, updated:, published:, labels: nil)
       @uid = uid
       @title = title
       @body = body
       @category = category
+      @labels = labels
       @created = created
       @updated = updated
       @published = published
@@ -127,9 +131,10 @@ module Carraway
       end
     end
 
-    def assign(title:, body:)
+    def assign(title:, body:, labels: nil)
       @title = title
       @body = body
+      @labels = labels
     end
 
     def save(at: Time.now)
@@ -158,6 +163,7 @@ module Carraway
         title: @title,
         body: @body,
         path: path,
+        labels: @labels,
         record_type: 'post',
         category: @category.key,
         created: @created.to_i,

@@ -73,6 +73,8 @@ categories: # Least one category is required
   category_key:
     title: 'Category Name'
     dir: '/category/path'
+labels:
+  label_key: 'Label title'
 ```
 
 ## Development
