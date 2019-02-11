@@ -22,7 +22,7 @@
       <% Carraway::Config.labels.each do |key, title| %>
         <p>
           <label>
-            <input type="checkbox" class="filled-in" name="labels[]" value="<%= key %>" <%= @post.labels.include?(key) ? 'checked' : nil %> />
+            <input type="checkbox" class="filled-in" name="labels[]" value="<%= key %>" <%= @post.labels&.include?(key) ? 'checked' : nil %> />
             <span><%= title %></span>
           </label>
         </p>
