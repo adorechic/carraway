@@ -8,3 +8,6 @@ backend:
   region: dummy
 file_backend:
   bucket: test
+labels:
+  poem: 'ポエム'
+  news: 'ニュース'

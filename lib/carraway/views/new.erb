@@ -8,6 +8,14 @@
           <option value="<%= category.key %>"><%= category.title %></option>
         <% end %>
       </select>
+      <% Carraway::Config.labels.each do |key, title| %>
+        <p>
+          <label>
+            <input type="checkbox" class="filled-in" name="labels[]" value="<%= key %>" />
+            <span><%= title %></span>
+          </label>
+        </p>
+      <% end %>
       <div class="input-field col s12">
         <input type="text" id="title" name="title" placeholder="記事タイトル">
         <label for="title">記事タイトル</label>

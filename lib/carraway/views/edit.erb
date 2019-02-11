@@ -19,6 +19,14 @@
           </tr>
         </tbody>
       </table>
+      <% Carraway::Config.labels.each do |key, title| %>
+        <p>
+          <label>
+            <input type="checkbox" class="filled-in" name="labels[]" value="<%= key %>" <%= @post.labels.include?(key) ? 'checked' : nil %> />
+            <span><%= title %></span>
+          </label>
+        </p>
+      <% end %>
       <div class="input-field col s12">
         <input type="text" id="title" name="title" placeholder="記事タイトル" value="<%= @post.title %>">
         <label for="title">記事タイトル</label>
