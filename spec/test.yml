@@ -8,6 +8,9 @@ backend:
   region: dummy
 file_backend:
   bucket: test
+  endpoint: http://localhost:6001
+  region: dummy
+  prefix: files
 labels:
   poem: 'ポエム'
   news: 'ニュース'

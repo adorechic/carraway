@@ -22,10 +22,6 @@ RSpec.describe Carraway::FileRepository do
     let(:repository) { described_class.new }
 
     before do
-      # FIXME DRY
-      s3_client = Aws::S3::Client.new(stub_responses: true)
-      s3_client.stub_responses(:put_object, true)
-      allow(repository).to receive(:s3_client).and_return(s3_client)
       repository.save(file)
     end
 
