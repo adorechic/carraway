@@ -7,3 +7,11 @@ services:
     command: -jar DynamoDBLocal.jar -dbPath /var/lib/dynamodb -port 6000
     volumes:
       - /tmp:/var/lib/dynamodb
+  minio:
+    image: minio/minio
+    ports:
+      - '6001:9000'
+    environment:
+      MINIO_ACCESS_KEY: dummy
+      MINIO_SECRET_KEY: dummy_secret
+    command: server /data

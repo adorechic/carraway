@@ -69,6 +69,8 @@ backend: # Required
 file_backend:
   bucket: 'carraway_bucket' # Required
   prefix: 'files' # Required.
+  endpoint: http://localhost:6001 # Optional. Set if you use local S3 like mineo
+  region: ap-northeast-1 # Optional.
 categories: # Least one category is required
   category_key:
     title: 'Category Name'

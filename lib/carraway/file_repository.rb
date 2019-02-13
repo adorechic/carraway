@@ -36,6 +36,18 @@ module Carraway
       )
     end
 
+    def setup
+      s3_client.create_bucket(
+        bucket: Config.file_backend['bucket']
+      )
+    end
+
+    def drop
+      s3_client.delete_bucket(
+        bucket: Config.file_backend['bucket']
+      )
+    end
+
     private
 
     def client
@@ -52,7 +64,17 @@ module Carraway
     end
 
     def s3_client
-      Aws::S3::Client.new
+      if Config.file_backend['endpoint']
+        Aws::S3::Client.new(
+          endpoint: Config.file_backend['endpoint'],
+          region: Config.file_backend['region'],
+          access_key_id: 'dummy',
+          secret_access_key: 'dummy_secret',
+          force_path_style: true,
+        )
+      else
+        Aws::S3::Client.new
+      end
     end
   end
 end

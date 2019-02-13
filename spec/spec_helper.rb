@@ -32,8 +32,6 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     Carraway::Config.load('spec/test.yml')
-    WebMock.disable_net_connect!(
-      allow: Carraway::Config.backend['endpoint']
-    )
+    WebMock.disable_net_connect!(allow_localhost: true)
   end
 end

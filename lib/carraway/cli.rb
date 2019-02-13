@@ -15,6 +15,7 @@ module Carraway
     def setup
       Carraway::Config.load(options[:config])
       Carraway::Post.setup
+      Carraway::FileRepository.new.setup
     end
 
     desc 'drop', 'Drop backend'
@@ -22,6 +23,7 @@ module Carraway
     def drop
       Carraway::Config.load(options[:config])
       Carraway::Post.drop
+      Carraway::FileRepository.new.drop
     end
   end
 end

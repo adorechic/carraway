@@ -29,10 +29,10 @@ RSpec.describe Carraway::Config do
   end
 
   describe '.file_backend' do
-    subject { described_class.file_backend }
-
     it do
-      is_expected.to eq('bucket' => 'test')
+      expect(
+        described_class.file_backend['bucket']
+      ).to eq('test')
     end
   end
 end

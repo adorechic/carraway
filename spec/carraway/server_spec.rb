@@ -120,12 +120,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     before do
-      # FIXME DRY
-      s3_client = Aws::S3::Client.new(stub_responses: true)
-      s3_client.stub_responses(:put_object, true)
-      repository = Carraway::FileRepository.new
-      allow(repository).to receive(:s3_client).and_return(s3_client)
-      repository.save(file)
+      Carraway::FileRepository.new.save(file)
     end
 
     it do
@@ -156,12 +151,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     before do
-      # FIXME DRY
-      s3_client = Aws::S3::Client.new(stub_responses: true)
-      s3_client.stub_responses(:put_object, true)
-      repository = Carraway::FileRepository.new
-      allow(repository).to receive(:s3_client).and_return(s3_client)
-      repository.save(file)
+      Carraway::FileRepository.new.save(file)
     end
 
     it do
@@ -369,12 +359,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     before do
-      # FIXME DRY
-      s3_client = Aws::S3::Client.new(stub_responses: true)
-      s3_client.stub_responses(:put_object, true)
-      repository = Carraway::FileRepository.new
-      allow(repository).to receive(:s3_client).and_return(s3_client)
-      repository.save(file)
+      Carraway::FileRepository.new.save(file)
     end
 
     it do
@@ -390,13 +375,6 @@ RSpec.describe Carraway::Server, type: :request do
         title: 'File title',
         file: { tempfile: '' }
       }
-    end
-
-    before do
-      # FIXME Do not use allow_any_instance_of
-      s3_client = Aws::S3::Client.new(stub_responses: true)
-      s3_client.stub_responses(:put_object, true)
-      allow_any_instance_of(Carraway::FileRepository).to receive(:s3_client).and_return(s3_client)
     end
 
     it do
