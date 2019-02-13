@@ -33,5 +33,10 @@ RSpec.configure do |config|
   config.before(:suite) do
     Carraway::Config.load('spec/test.yml')
     WebMock.disable_net_connect!(allow_localhost: true)
+    Carraway::FileRepository.new.setup
+  end
+
+  config.after(:suite) do
+    Carraway::FileRepository.new.drop
   end
 end

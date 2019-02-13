@@ -43,6 +43,14 @@ module Carraway
     end
 
     def drop
+      s3_client.list_objects(
+        bucket: Config.file_backend['bucket']
+      ).contents.each do |content|
+        s3_client.delete_object(
+          bucket: Config.file_backend['bucket'],
+          key: content.key
+        )
+      end
       s3_client.delete_bucket(
         bucket: Config.file_backend['bucket']
       )
