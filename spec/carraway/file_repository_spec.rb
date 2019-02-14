@@ -13,6 +13,33 @@ RSpec.describe Carraway::FileRepository do
 
   let(:repository) { described_class.new }
 
+  describe '#save' do
+    let(:file) do
+      Carraway::File.new(
+        title: 'Title',
+        file: { tempfile: '' }
+      )
+    end
+
+    it do
+      repository.save(file, at: Time.now - 10)
+      expect(repository.all.size).to eq(1)
+
+      found = repository.all.first
+      expect(found.title).to eq('Title')
+      created = found.created
+      found.title = 'New Title'
+
+      repository.save(found)
+
+      expect(repository.all.size).to eq(1)
+
+      found = repository.all.first
+      expect(found.title).to eq('New Title')
+      expect(found.created).to eq(created)
+    end
+  end
+
   describe '#all' do
     let(:file) do
       Carraway::File.new(

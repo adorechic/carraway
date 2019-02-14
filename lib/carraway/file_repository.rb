@@ -41,15 +41,17 @@ module Carraway
           uid: file.uid,
           record_type: 'file',
           title: file.title,
-          created: at.to_i
+          created: file.created || at.to_i
         }
       )
-      s3_client.put_object(
-        body: file.file[:tempfile],
-        bucket: Config.file_backend['bucket'],
-        acl: 'public-read',
-        key: file.path
-      )
+      if file.file
+        s3_client.put_object(
+          body: file.file[:tempfile],
+          bucket: Config.file_backend['bucket'],
+          acl: 'public-read',
+          key: file.path
+        )
+      end
     end
 
     def setup

@@ -3,7 +3,8 @@ require 'aws-sdk-s3'
 
 module Carraway
   class File
-    attr_reader :title, :uid, :created, :file
+    attr_reader :uid, :created, :file
+    attr_accessor :title
 
     def initialize(title:, file: nil, uid: nil, created: nil)
       @title = title
