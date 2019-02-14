@@ -11,6 +11,8 @@ RSpec.describe Carraway::FileRepository do
     Carraway::Post.drop
   end
 
+  let(:repository) { described_class.new }
+
   describe '#all' do
     let(:file) do
       Carraway::File.new(
@@ -18,8 +20,13 @@ RSpec.describe Carraway::FileRepository do
         file: { tempfile: '' }
       )
     end
-
-    let(:repository) { described_class.new }
+    let!(:post) do
+      Carraway::Post.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
 
     before do
       repository.save(file)
@@ -32,6 +39,34 @@ RSpec.describe Carraway::FileRepository do
       expect(found.title).to eq('Title')
       expect(found.uid).to_not be_nil
       expect(found.created_at).to_not be_nil
+    end
+  end
+
+  describe '#find' do
+    let(:file) do
+      Carraway::File.new(
+        title: 'Title',
+        file: { tempfile: '' }
+      )
+    end
+    let!(:post) do
+      Carraway::Post.create(
+        title: 'Post title',
+        body: 'This is an article.',
+        category_key: 'test_category'
+      )
+    end
+
+    before do
+      repository.save(file)
+    end
+
+    it do
+      found = repository.find(file.uid)
+      expect(found.title).to eq(file.title)
+
+      expect(repository.find('unknown')).to eq(nil)
+      expect(repository.find(post.uid)).to eq(nil)
     end
   end
 end

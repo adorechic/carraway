@@ -18,6 +18,22 @@ module Carraway
       end
     end
 
+    def find(uid)
+      item = client.get_item(
+        key: {
+          uid: uid
+        },
+        table_name: Config.backend['table_name'],
+      ).item
+      if item && item['record_type'] == 'file'
+        Carraway::File.new(
+          uid: item['uid'],
+          title: item['title'],
+          created: item['created']
+        )
+      end
+    end
+
     def save(file, at: Time.now)
       client.put_item(
         table_name: Config.backend['table_name'],
