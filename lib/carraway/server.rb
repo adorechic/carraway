@@ -122,6 +122,11 @@ module Carraway
       redirect "/carraway/"
     end
 
+    get %r{/carraway/files/(\d+)} do |uid|
+      @file = FileRepository.new.find(uid)
+      erb :file_edit
+    end
+
     get '/carraway/files' do
       @files = FileRepository.new.all
       erb :files

@@ -389,4 +389,23 @@ RSpec.describe Carraway::Server, type: :request do
       expect(file.title).to eq('File title')
     end
   end
+
+  describe 'GET /carraway/files/:id' do
+    let(:file) do
+      Carraway::File.new(
+        title: 'Title',
+        file: { tempfile: '' }
+      )
+    end
+
+    before do
+      Carraway::FileRepository.new.save(file)
+    end
+
+    it do
+      get "/carraway/files/#{file.uid}"
+      expect(last_response).to be_ok
+      expect(last_response.body).to include(file.path)
+    end
+  end
 end
