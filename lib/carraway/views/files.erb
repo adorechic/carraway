@@ -25,7 +25,11 @@
   <tbody>
     <% @files.each do |file| %>
       <tr>
-        <td><%= file.title %></td>
+        <td>
+          <a href="/carraway/files/<%= file.uid%>">
+            <%= file.title %>
+          </a>
+        </td>
         <td><%= file.created_at %></td>
         <td><%= file.path %></td>
       </tr>

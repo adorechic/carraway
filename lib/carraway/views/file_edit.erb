@@ -1,0 +1,15 @@
+<h3><%= @file.title %></h3>
+<p><%= @file.path %></p>
+
+<div class="row">
+  <form class="col s12" enctype="multipart/form-data">
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text" id="title" name="title" placeholder="ファイルタイトル">
+        <label for="title">ファイルタイトル</label>
+      </div>
+    </div>
+
+    <button type="submit" class="waves-effect waves-light btn">保存</button>
+  </form>
+</div>
