@@ -1,11 +1,11 @@
 <h3><%= @file.title %></h3>
 <p><%= @file.path %></p>
-
 <div class="row">
-  <form class="col s12" enctype="multipart/form-data">
+  <form action="/carraway/files/<%= @file.uid %>" method="POST" class="col s12" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PATCH">
     <div class="row">
       <div class="input-field col s12">
-        <input type="text" id="title" name="title" placeholder="ファイルタイトル">
+        <input type="text" id="title" name="title" placeholder="ファイルタイトル" value="<%= @file.title %>" >
         <label for="title">ファイルタイトル</label>
       </div>
     </div>

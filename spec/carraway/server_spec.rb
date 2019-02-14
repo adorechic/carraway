@@ -408,4 +408,31 @@ RSpec.describe Carraway::Server, type: :request do
       expect(last_response.body).to include(file.path)
     end
   end
+
+  describe 'PATCH /carraway/files/:id' do
+    let(:file) do
+      Carraway::File.new(
+        title: 'Title',
+        file: { tempfile: '' }
+      )
+    end
+    let(:repository) { Carraway::FileRepository.new }
+
+    before do
+      repository.save(file)
+    end
+
+    let(:params) do
+      { title: 'New Title' }
+    end
+
+    it do
+      patch "/carraway/files/#{file.uid}", params
+      expect(last_response).to be_redirect
+      expect(last_response.header["Location"]).to be_end_with("/carraway/files/#{file.uid}")
+
+      updated = repository.find(file.uid)
+      expect(updated.title).to eq('New Title')
+    end
+  end
 end
