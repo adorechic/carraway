@@ -44,34 +44,54 @@ module Carraway
         post
       end
 
-      def all(published_only: false)
-        query = { table_name: Config.backend['table_name'] }
+      def all(published_only: false, include_file: false)
+        filter_expressions = []
+        expression_attribute_values = {}
+
+        unless include_file
+          filter_expressions << 'record_type = :type'
+          expression_attribute_values.merge!(':type' => 'post')
+        end
+
         if published_only
-          query[:filter_expression] = <<~FILTER
-            record_type = :type
-            AND attribute_exists(published)
-            AND (NOT attribute_type(published, :t))
-            AND published < :now
-          FILTER
-          query[:expression_attribute_values] = { ':t' => 'NULL', ':now' => Time.now.to_i, ':type' => 'post' }
-        else
-          query[:filter_expression] = <<~FILTER
-            record_type = :type
-          FILTER
-          query[:expression_attribute_values] = { ':type' => 'post' }
+          filter_expressions << 'attribute_exists(published)'
+          filter_expressions << '(NOT attribute_type(published, :t))'
+          filter_expressions << 'published < :now'
+          expression_attribute_values.merge!(':t' => 'NULL', ':now' => Time.now.to_i)
+        end
+
+        query = { table_name: Config.backend['table_name'] }
+        unless filter_expressions.empty?
+          query.merge!(
+            filter_expression: filter_expressions.join(' AND '),
+            expression_attribute_values: expression_attribute_values
+          )
         end
 
         client.scan(query).items.map do |item|
-          new(
-            uid: item['uid'],
-            title: item['title'],
-            body: item['body'],
-            labels: item['labels'],
-            category: Category.find(item['category']),
-            created: Time.at(item['created']),
-            updated: Time.at(item['updated']),
-            published: item['published'] && Time.at(item['published'])
-          )
+          case item['record_type']
+          when 'post'
+            new(
+              uid: item['uid'],
+              title: item['title'],
+              body: item['body'],
+              labels: item['labels'],
+              category: Category.find(item['category']),
+              created: Time.at(item['created']),
+              updated: Time.at(item['updated']),
+              published: item['published'] && Time.at(item['published'])
+            )
+          when 'file'
+            Carraway::File.new(
+              uid: item['uid'],
+              title: item['title'],
+              created: item['created'],
+              labels: item['labels'],
+              published: item['published']
+            )
+          else
+            raise 'Unknown record_type'
+          end
         end
       end
 

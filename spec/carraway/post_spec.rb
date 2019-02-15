@@ -75,6 +75,72 @@ RSpec.describe Carraway::Post do
     end
   end
 
+  describe '.all' do
+    let!(:published_post) do
+      described_class.create(
+        title: 'Published post',
+        body: 'This is an article.',
+        category_key: 'test_category',
+        published: Time.now.to_i - 1
+      )
+    end
+
+    let!(:unpublished_post) do
+      described_class.create(
+        title: 'Unpublished post',
+        body: 'This is an article.',
+        category_key: 'test_category',
+      )
+    end
+    let(:file) do
+      Carraway::File.new(
+        title: 'File Title',
+        file: { tempfile: '' },
+        published: Time.now.to_i - 1
+      )
+    end
+
+    before do
+      Carraway::FileRepository.new.save(file)
+    end
+
+    it 'returns all posts' do
+      post_uids = described_class.all.map(&:uid)
+
+      expect(post_uids.size).to eq(2)
+      expect(post_uids).to be_include(published_post.uid)
+      expect(post_uids).to be_include(unpublished_post.uid)
+      expect(post_uids).to_not be_include(file.uid)
+    end
+
+    it 'returns published posts with published_only' do
+      post_uids = described_class.all(published_only: true).map(&:uid)
+
+      expect(post_uids.size).to eq(1)
+      expect(post_uids).to be_include(published_post.uid)
+      expect(post_uids).to_not be_include(unpublished_post.uid)
+      expect(post_uids).to_not be_include(file.uid)
+    end
+
+    it 'returns posts and files with include_file' do
+      post_uids = described_class.all(include_file: true).map(&:uid)
+
+      expect(post_uids.size).to eq(3)
+      expect(post_uids).to be_include(published_post.uid)
+      expect(post_uids).to be_include(unpublished_post.uid)
+      expect(post_uids).to be_include(file.uid)
+    end
+
+    it 'returns published posts and files with include_file and published_only' do
+      post_uids = described_class.all(include_file: true, published_only: true).map(&:uid)
+
+      expect(post_uids.size).to eq(2)
+      expect(post_uids).to be_include(published_post.uid)
+      expect(post_uids).to_not be_include(unpublished_post.uid)
+      expect(post_uids).to be_include(file.uid)
+    end
+  end
+
   describe '#path' do
     let(:post) do
       described_class.create(
