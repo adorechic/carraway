@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.12.0](https://github.com/adorechic/carraway/tree/v0.12.0) (2019-02-15)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v0.11.0...v0.12.0)
+
+**Implemented enhancements:**
+
+- Support labels on file [\#9](https://github.com/adorechic/carraway/pull/9) ([adorechic](https://github.com/adorechic))
+
 ## [v0.11.0](https://github.com/adorechic/carraway/tree/v0.11.0) (2019-02-15)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v0.10.0...v0.11.0)
 
