@@ -388,6 +388,24 @@ RSpec.describe Carraway::Server, type: :request do
       file = repository.all.last
       expect(file.title).to eq('File title')
     end
+
+    context 'with labels' do
+      before do
+        params[:labels] = %w(news)
+      end
+
+      it do
+        post '/carraway/files', params
+
+        expect(last_response).to be_redirect
+        expect(last_response.header["Location"]).to be_end_with('/carraway/files')
+
+        repository = Carraway::FileRepository.new
+        expect(repository.all.size).to eq(1)
+        file = repository.all.last
+        expect(file.labels).to eq(%w(news))
+      end
+    end
   end
 
   describe 'GET /carraway/files/:id' do
@@ -433,6 +451,22 @@ RSpec.describe Carraway::Server, type: :request do
 
       updated = repository.find(file.uid)
       expect(updated.title).to eq('New Title')
+    end
+
+    context 'with labels' do
+      before do
+        params[:labels] = %w(news poem)
+      end
+
+      it do
+        patch "/carraway/files/#{file.uid}", params
+
+        expect(last_response).to be_redirect
+        expect(last_response.header["Location"]).to be_end_with("/carraway/files/#{file.uid}")
+
+        updated = repository.find(file.uid)
+        expect(updated.labels).to eq(%w(news poem))
+      end
     end
   end
 

@@ -9,6 +9,14 @@
         <label for="title">ファイルタイトル</label>
       </div>
     </div>
+    <% Carraway::Config.labels.each do |key, title| %>
+      <p>
+        <label>
+          <input type="checkbox" class="filled-in" name="labels[]" value="<%= key %>" <%= @file.labels&.include?(key) ? 'checked' : nil %> />
+          <span><%= title %></span>
+        </label>
+      </p>
+    <% end %>
 
     <button type="submit" class="waves-effect waves-light btn">保存</button>
   </form>

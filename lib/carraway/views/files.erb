@@ -9,6 +9,14 @@
       <div class="input-field col s12">
         <input type="file" id="file" name="file" placeholder="ファイル">
       </div>
+      <% Carraway::Config.labels.each do |key, title| %>
+        <p>
+          <label>
+            <input type="checkbox" class="filled-in" name="labels[]" value="<%= key %>" />
+            <span><%= title %></span>
+          </label>
+        </p>
+      <% end %>
     </div>
 
     <button type="submit" class="waves-effect waves-light btn">保存</button>

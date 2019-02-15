@@ -13,7 +13,8 @@ module Carraway
         Carraway::File.new(
           uid: item['uid'],
           title: item['title'],
-          created: item['created']
+          created: item['created'],
+          labels: item['labels']
         )
       end
     end
@@ -29,7 +30,8 @@ module Carraway
         Carraway::File.new(
           uid: item['uid'],
           title: item['title'],
-          created: item['created']
+          created: item['created'],
+          labels: item['labels']
         )
       end
     end
@@ -51,7 +53,8 @@ module Carraway
           uid: file.uid,
           record_type: 'file',
           title: file.title,
-          created: file.created || at.to_i
+          created: file.created || at.to_i,
+          labels: file.labels
         }
       )
       if file.file
