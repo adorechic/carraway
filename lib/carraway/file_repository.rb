@@ -14,7 +14,8 @@ module Carraway
           uid: item['uid'],
           title: item['title'],
           created: item['created'],
-          labels: item['labels']
+          labels: item['labels'],
+          published: item['published']
         )
       end
     end
@@ -31,7 +32,8 @@ module Carraway
           uid: item['uid'],
           title: item['title'],
           created: item['created'],
-          labels: item['labels']
+          labels: item['labels'],
+          published: item['published']
         )
       end
     end
@@ -54,7 +56,8 @@ module Carraway
           record_type: 'file',
           title: file.title,
           created: file.created || at.to_i,
-          labels: file.labels
+          labels: file.labels,
+          published: file.published
         }
       )
       if file.file

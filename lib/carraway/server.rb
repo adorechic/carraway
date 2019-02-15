@@ -25,7 +25,7 @@ module Carraway
     end
 
     get '/carraway/api/posts' do
-      posts = Post.all(published_only: true).map(&:to_h)
+      posts = Post.all(published_only: true, include_file: true).map(&:to_h)
 
       # HACK Expand plugin
       transformed = params[:view] == 'html'

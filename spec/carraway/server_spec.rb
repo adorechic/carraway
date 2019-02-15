@@ -46,22 +46,44 @@ RSpec.describe Carraway::Server, type: :request do
       )
     end
 
+    let(:file) do
+      Carraway::File.new(
+        title: 'File Title',
+        file: { tempfile: '' },
+        labels: %w(news),
+        published: Time.now.to_i - 1
+      )
+    end
+    let(:file_repository) { Carraway::FileRepository.new }
+
+    before do
+      file_repository.save(file)
+    end
+
     it 'returns published posts' do
       get '/carraway/api/posts'
       expect(last_response).to be_ok
 
       json = JSON.parse(last_response.body)
 
-      expect(json['data']['posts'].size).to eq(1)
-      post_response = json['data']['posts'].first
-      expect(post_response['title']).to eq(post.title)
+      expect(json['data']['posts'].size).to eq(2)
+      post_response = json['data']['posts'].detect do |res|
+        res['title'] == post.title
+      end
       expect(post_response['body']).to eq(post.body)
+
+      file_response = json['data']['posts'].detect do |res|
+        res['title'] == file.title
+      end
+      expect(file_response['labels']).to eq(file.labels)
     end
 
     context 'if post is not published' do
       before do
         post.published = nil
         post.save
+
+        file_repository.destroy(file)
       end
 
       it 'does not return posts' do
@@ -75,6 +97,10 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     context 'if html view option is given' do
+      before do
+        file_repository.destroy(file)
+      end
+
       it 'returns published posts' do
         get '/carraway/api/posts?view=html'
         expect(last_response).to be_ok
@@ -96,6 +122,7 @@ RSpec.describe Carraway::Server, type: :request do
       before do
         post.labels = %w(poem)
         post.save
+        file_repository.destroy(file)
       end
 
       it 'returns published posts' do
