@@ -4,13 +4,14 @@ require 'aws-sdk-s3'
 module Carraway
   class File
     attr_reader :uid, :created, :file
-    attr_accessor :title
+    attr_accessor :title, :labels
 
-    def initialize(title:, file: nil, uid: nil, created: nil)
+    def initialize(title:, file: nil, uid: nil, created: nil, labels: nil)
       @title = title
       @file = file
       @uid = uid || generate_uid
       @created = created
+      @labels = labels
     end
 
     %i(created).each do |col|

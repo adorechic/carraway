@@ -139,6 +139,7 @@ module Carraway
       # FIXME handle not found
       # FIXME validation
       file.title = params[:title]
+      file.labels = params[:labels]
       repository.save(file)
       redirect "/carraway/files/#{file.uid}"
     end
@@ -152,7 +153,7 @@ module Carraway
     end
 
     post '/carraway/files' do
-      file = File.new(title: params[:title], file: params[:file])
+      file = File.new(title: params[:title], file: params[:file], labels: params[:labels])
       # FIXME validation and error
       FileRepository.new.save(file)
       flash[:message] = "Saved #{file.path}"
