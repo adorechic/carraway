@@ -1,5 +1,18 @@
 # Change Log
 
+## [v0.11.0](https://github.com/adorechic/carraway/tree/v0.11.0) (2019-02-15)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v0.10.0...v0.11.0)
+
+**Implemented enhancements:**
+
+- Support file delete [\#8](https://github.com/adorechic/carraway/pull/8) ([adorechic](https://github.com/adorechic))
+- File title update [\#7](https://github.com/adorechic/carraway/pull/7) ([adorechic](https://github.com/adorechic))
+- File detail page [\#6](https://github.com/adorechic/carraway/pull/6) ([adorechic](https://github.com/adorechic))
+
+**Merged pull requests:**
+
+- Introduce minio for s3 testing [\#5](https://github.com/adorechic/carraway/pull/5) ([adorechic](https://github.com/adorechic))
+
 ## [v0.10.0](https://github.com/adorechic/carraway/tree/v0.10.0) (2019-02-11)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v0.9.0...v0.10.0)
 
