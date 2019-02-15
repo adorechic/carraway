@@ -12,4 +12,10 @@
 
     <button type="submit" class="waves-effect waves-light btn">保存</button>
   </form>
+  <form action="/carraway/files/<%= @file.uid %>" method="POST" class="col s12">
+    <input type="hidden" name="_method" value="DELETE">
+    <div class="col s6">
+      <button type="submit" class="waves-effect waves-light btn red">削除</button>
+    </div>
+  </form>
 </div>

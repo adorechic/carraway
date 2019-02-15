@@ -435,4 +435,27 @@ RSpec.describe Carraway::Server, type: :request do
       expect(updated.title).to eq('New Title')
     end
   end
+
+  describe 'DELETE /carraway/files/:id' do
+    let(:file) do
+      Carraway::File.new(
+        title: 'Title',
+        file: { tempfile: '' }
+      )
+    end
+    let(:repository) { Carraway::FileRepository.new }
+
+    before do
+      repository.save(file)
+    end
+
+    it do
+      delete "/carraway/files/#{file.uid}"
+
+      expect(last_response).to be_redirect
+      expect(last_response.header["Location"]).to be_end_with('/carraway/files')
+      expect(repository.find(file.uid)).to eq(nil)
+      expect(repository).to_not be_persisted(file)
+    end
+  end
 end

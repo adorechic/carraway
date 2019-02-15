@@ -143,6 +143,14 @@ module Carraway
       redirect "/carraway/files/#{file.uid}"
     end
 
+    delete %r{/carraway/files/(\d+)} do |uid|
+      repository = FileRepository.new
+      file = repository.find(uid)
+      # FIXME handle not found
+      repository.destroy(file)
+      redirect "/carraway/files"
+    end
+
     post '/carraway/files' do
       file = File.new(title: params[:title], file: params[:file])
       # FIXME validation and error
