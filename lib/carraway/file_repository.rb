@@ -34,6 +34,16 @@ module Carraway
       end
     end
 
+    def persisted?(file)
+      s3_client.head_object(
+        bucket: Config.file_backend['bucket'],
+        key: file.path
+      )
+      true
+    rescue Aws::S3::Errors::NotFound
+      false
+    end
+
     def save(file, at: Time.now)
       client.put_item(
         table_name: Config.backend['table_name'],
@@ -52,6 +62,19 @@ module Carraway
           key: file.path
         )
       end
+    end
+
+    def destroy(file)
+      s3_client.delete_object(
+        bucket: Config.file_backend['bucket'],
+        key: file.path
+      )
+      client.delete_item(
+        table_name: Config.backend['table_name'],
+        key: {
+          uid: file.uid
+        }
+      )
     end
 
     def setup

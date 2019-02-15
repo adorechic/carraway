@@ -96,4 +96,26 @@ RSpec.describe Carraway::FileRepository do
       expect(repository.find(post.uid)).to eq(nil)
     end
   end
+
+  describe '#destroy' do
+    let(:file) do
+      Carraway::File.new(
+        title: 'Title',
+        file: { tempfile: '' }
+      )
+    end
+
+    before do
+      repository.save(file)
+    end
+
+    it do
+      expect(repository).to be_persisted(file)
+
+      repository.destroy(file)
+
+      expect(repository.find(file.uid)).to eq(nil)
+      expect(repository).to_not be_persisted(file)
+    end
+  end
 end
