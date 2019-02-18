@@ -51,7 +51,8 @@ RSpec.describe Carraway::Server, type: :request do
         title: 'File Title',
         file: { tempfile: '' },
         labels: %w(news),
-        published: Time.now.to_i - 1
+        published: Time.now.to_i - 1,
+        category: Carraway::Category.find('test_category'),
       )
     end
     let(:file_repository) { Carraway::FileRepository.new }
@@ -142,7 +143,8 @@ RSpec.describe Carraway::Server, type: :request do
     let(:file) do
       Carraway::File.new(
         title: 'Title',
-        file: { tempfile: '' }
+        file: { tempfile: '' },
+        category: Carraway::Category.find('test_category'),
       )
     end
 
@@ -173,7 +175,8 @@ RSpec.describe Carraway::Server, type: :request do
     let(:file) do
       Carraway::File.new(
         title: 'Title',
-        file: { tempfile: '' }
+        file: { tempfile: '' },
+        category: Carraway::Category.find('test_category'),
       )
     end
 
@@ -381,7 +384,8 @@ RSpec.describe Carraway::Server, type: :request do
     let(:file) do
       Carraway::File.new(
         title: 'Title',
-        file: { tempfile: '' }
+        file: { tempfile: '' },
+        category: Carraway::Category.find('test_category'),
       )
     end
 
@@ -400,7 +404,8 @@ RSpec.describe Carraway::Server, type: :request do
     let(:params) do
       {
         title: 'File title',
-        file: { tempfile: '' }
+        file: { tempfile: '' },
+        category: 'test_category'
       }
     end
 
@@ -414,6 +419,7 @@ RSpec.describe Carraway::Server, type: :request do
       expect(repository.all.size).to eq(1)
       file = repository.all.last
       expect(file.title).to eq('File title')
+      expect(file.category.title).to eq('カテゴリータイトル')
     end
 
     context 'with labels' do
@@ -439,7 +445,8 @@ RSpec.describe Carraway::Server, type: :request do
     let(:file) do
       Carraway::File.new(
         title: 'Title',
-        file: { tempfile: '' }
+        file: { tempfile: '' },
+        category: Carraway::Category.find('test_category'),
       )
     end
 
@@ -458,7 +465,8 @@ RSpec.describe Carraway::Server, type: :request do
     let(:file) do
       Carraway::File.new(
         title: 'Title',
-        file: { tempfile: '' }
+        file: { tempfile: '' },
+        category: Carraway::Category.find('test_category'),
       )
     end
     let(:repository) { Carraway::FileRepository.new }
@@ -468,7 +476,7 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     let(:params) do
-      { title: 'New Title' }
+      { title: 'New Title', category: 'test_category' }
     end
 
     it do
@@ -478,6 +486,7 @@ RSpec.describe Carraway::Server, type: :request do
 
       updated = repository.find(file.uid)
       expect(updated.title).to eq('New Title')
+      expect(updated.category.title).to eq('カテゴリータイトル')
     end
 
     context 'with labels' do
@@ -501,7 +510,8 @@ RSpec.describe Carraway::Server, type: :request do
     let(:file) do
       Carraway::File.new(
         title: 'Title',
-        file: { tempfile: '' }
+        file: { tempfile: '' },
+        category: Carraway::Category.find('test_category'),
       )
     end
     let(:repository) { Carraway::FileRepository.new }

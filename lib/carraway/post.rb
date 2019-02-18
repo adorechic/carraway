@@ -87,7 +87,8 @@ module Carraway
               title: item['title'],
               created: item['created'],
               labels: item['labels'],
-              published: item['published']
+              published: item['published'],
+              category: Category.find(item['category']),
             )
           else
             raise 'Unknown record_type'

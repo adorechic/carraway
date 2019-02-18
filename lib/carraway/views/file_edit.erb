@@ -9,6 +9,12 @@
         <label for="title">ファイルタイトル</label>
       </div>
     </div>
+    <label>記事カテゴリー</label>
+    <select name="category" class="browser-default">
+      <% Carraway::Category.all.each do |category| %>
+        <option value="<%= category.key %>"<%= category == @file.category ? 'selected' : nil%>><%= category.title %></option>
+      <% end %>
+    </select>
     <% Carraway::Config.labels.each do |key, title| %>
       <p>
         <label>

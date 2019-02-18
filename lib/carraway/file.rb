@@ -4,15 +4,16 @@ require 'aws-sdk-s3'
 module Carraway
   class File
     attr_reader :uid, :created, :file, :published
-    attr_accessor :title, :labels
+    attr_accessor :title, :labels, :category
 
-    def initialize(title:, file: nil, uid: nil, created: Time.now.to_i, labels: nil, published: nil)
+    def initialize(title:, file: nil, uid: nil, created: Time.now.to_i, labels: nil, published: nil, category: nil)
       @title = title
       @file = file
       @uid = uid || generate_uid
       @created = created
       @labels = labels
       @published = published || created
+      @category = category || Category.all.first # FIXME validation
     end
 
     %i(created).each do |col|
@@ -36,7 +37,8 @@ module Carraway
         labels: @labels,
         record_type: 'file',
         created: @created.to_i,
-        published: @published && @published.to_i
+        published: @published && @published.to_i,
+        category: @category.key,
       }
     end
 
