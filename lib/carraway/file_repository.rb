@@ -15,7 +15,8 @@ module Carraway
           title: item['title'],
           created: item['created'],
           labels: item['labels'],
-          published: item['published']
+          published: item['published'],
+          category: Carraway::Category.find(item['category'])
         )
       end
     end
@@ -33,7 +34,8 @@ module Carraway
           title: item['title'],
           created: item['created'],
           labels: item['labels'],
-          published: item['published']
+          published: item['published'],
+          category: Carraway::Category.find(item['category'])
         )
       end
     end
@@ -57,7 +59,8 @@ module Carraway
           title: file.title,
           created: file.created || at.to_i,
           labels: file.labels,
-          published: file.published
+          published: file.published,
+          category: file.category.key
         }
       )
       if file.file

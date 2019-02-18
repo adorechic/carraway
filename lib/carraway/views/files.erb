@@ -9,6 +9,13 @@
       <div class="input-field col s12">
         <input type="file" id="file" name="file" placeholder="ファイル">
       </div>
+      <label>記事カテゴリー</label>
+      <select name="category" class="browser-default">
+        <option value="" disabled selected>記事カテゴリーを選択</option>
+        <% Carraway::Category.all.each do |category| %>
+          <option value="<%= category.key %>"><%= category.title %></option>
+        <% end %>
+      </select>
       <% Carraway::Config.labels.each do |key, title| %>
         <p>
           <label>

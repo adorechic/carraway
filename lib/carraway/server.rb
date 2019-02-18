@@ -26,7 +26,6 @@ module Carraway
 
     get '/carraway/api/posts' do
       posts = Post.all(published_only: true, include_file: true).map(&:to_h)
-
       # HACK Expand plugin
       transformed = params[:view] == 'html'
       if transformed
@@ -140,6 +139,7 @@ module Carraway
       # FIXME validation
       file.title = params[:title]
       file.labels = params[:labels]
+      file.category = Category.find(params[:category])
       repository.save(file)
       redirect "/carraway/files/#{file.uid}"
     end
@@ -153,7 +153,12 @@ module Carraway
     end
 
     post '/carraway/files' do
-      file = File.new(title: params[:title], file: params[:file], labels: params[:labels])
+      file = File.new(
+        title: params[:title],
+        file: params[:file],
+        labels: params[:labels],
+        category: Category.find(params[:category]),
+      )
       # FIXME validation and error
       FileRepository.new.save(file)
       flash[:message] = "Saved #{file.path}"
