@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.0.0](https://github.com/adorechic/carraway/tree/v1.0.0) (2019-02-18)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v0.12.0...v1.0.0)
+
+**Implemented enhancements:**
+
+- Support file categorize [\#11](https://github.com/adorechic/carraway/pull/11) ([adorechic](https://github.com/adorechic))
+- Return files on API as a kind of posts [\#10](https://github.com/adorechic/carraway/pull/10) ([adorechic](https://github.com/adorechic))
+
 ## [v0.12.0](https://github.com/adorechic/carraway/tree/v0.12.0) (2019-02-15)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v0.11.0...v0.12.0)
 
