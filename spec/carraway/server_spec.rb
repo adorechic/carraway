@@ -98,18 +98,14 @@ RSpec.describe Carraway::Server, type: :request do
     end
 
     context 'if html view option is given' do
-      before do
-        file_repository.destroy(file)
-      end
-
       it 'returns published posts' do
         get '/carraway/api/posts?view=html'
         expect(last_response).to be_ok
 
         json = JSON.parse(last_response.body)
 
-        expect(json['data']['posts'].size).to eq(1)
-        post_response = json['data']['posts'].first
+        expect(json['data']['posts'].size).to eq(2)
+        post_response = json['data']['posts'].detect {|post| post['record_type'] == 'post'}
         expect(post_response['title']).to eq(post.title)
         expect(post_response['body']).to eq(<<~BODY)
         <h1>Header</h1>

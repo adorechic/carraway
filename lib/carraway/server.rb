@@ -30,7 +30,10 @@ module Carraway
       transformed = params[:view] == 'html'
       if transformed
         markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-        posts = posts.map { |post| post[:body] = markdown.render(post[:body]); post }
+        posts = posts.map do |post|
+          post[:body] = markdown.render(post[:body]) if post[:body]
+          post
+        end
       end
 
       { data: { posts: posts } }.to_json
