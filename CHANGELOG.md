@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.1.0](https://github.com/adorechic/carraway/tree/v1.1.0) (2019-02-28)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v1.0.1...v1.1.0)
+
+**Merged pull requests:**
+
+- Sort via created [\#13](https://github.com/adorechic/carraway/pull/13) ([isohi](https://github.com/isohi))
+
 ## [v1.0.1](https://github.com/adorechic/carraway/tree/v1.0.1) (2019-02-28)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v1.0.0...v1.0.1)
 
