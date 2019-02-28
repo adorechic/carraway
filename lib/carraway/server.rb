@@ -40,13 +40,13 @@ module Carraway
     end
 
     get '/carraway/new' do
-      @files = FileRepository.new.all
+      @files = FileRepository.new.all.sort_by!(&:created).reverse!
       erb :new
     end
 
     get %r{/carraway/edit/(\d+)} do |uid|
       @post = Post.find(uid)
-      @files = FileRepository.new.all
+      @files = FileRepository.new.all.sort_by!(&:created).reverse!
       # FIXME handle not found
       erb :edit
     end
@@ -131,7 +131,7 @@ module Carraway
     end
 
     get '/carraway/files' do
-      @files = FileRepository.new.all
+      @files = FileRepository.new.all.sort_by!(&:created).reverse!
       erb :files
     end
 
