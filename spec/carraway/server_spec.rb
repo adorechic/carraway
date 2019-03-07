@@ -400,7 +400,7 @@ RSpec.describe Carraway::Server, type: :request do
     let(:params) do
       {
         title: 'File title',
-        file: { tempfile: '' },
+        file: { tempfile: '', filename: 'carraway.jpg' },
         category: 'test_category'
       }
     end
@@ -416,6 +416,8 @@ RSpec.describe Carraway::Server, type: :request do
       file = repository.all.last
       expect(file.title).to eq('File title')
       expect(file.category.title).to eq('カテゴリータイトル')
+      name, ext = file.path.split('.')
+      expect(ext).to eq('jpg')
     end
 
     context 'with labels' do

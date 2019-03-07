@@ -12,6 +12,7 @@ module Carraway
       client.scan(query).items.map do |item|
         Carraway::File.new(
           uid: item['uid'],
+          ext: item['ext'],
           title: item['title'],
           created: item['created'],
           labels: item['labels'],
@@ -31,6 +32,7 @@ module Carraway
       if item && item['record_type'] == 'file'
         Carraway::File.new(
           uid: item['uid'],
+          ext: item['ext'],
           title: item['title'],
           created: item['created'],
           labels: item['labels'],
@@ -56,6 +58,7 @@ module Carraway
         item: {
           uid: file.uid,
           record_type: 'file',
+          ext: file.ext,
           title: file.title,
           created: file.created || at.to_i,
           labels: file.labels,
