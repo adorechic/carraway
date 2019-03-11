@@ -6,11 +6,11 @@ module Carraway
     attr_reader :uid, :ext, :created, :file, :published
     attr_accessor :title, :labels, :category
 
-    def initialize(title:, file: nil, uid: nil, ext: nil, created: Time.now.to_i, labels: nil, published: nil, category: nil)
+    def initialize(title:, file: nil, uid: nil, ext: 'pdf', created: Time.now.to_i, labels: nil, published: nil, category: nil)
       @title = title
       @file = file
       @uid = uid || generate_uid
-      @ext = ext || file && file[:filename]&.split('.')&.last
+      @ext = file && file[:filename]&.split('.')&.last || ext
       @created = created
       @labels = labels
       @published = published || created
