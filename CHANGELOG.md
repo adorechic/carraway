@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.2.0](https://github.com/adorechic/carraway/tree/v1.2.0) (2019-03-11)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v1.1.0...v1.2.0)
+
+**Merged pull requests:**
+
+- Support filename extension [\#14](https://github.com/adorechic/carraway/pull/14) ([isohi](https://github.com/isohi))
+
 ## [v1.1.0](https://github.com/adorechic/carraway/tree/v1.1.0) (2019-02-28)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v1.0.1...v1.1.0)
 
