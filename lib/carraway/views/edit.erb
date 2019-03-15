@@ -42,8 +42,8 @@
   </form>
   <%= erb :file_modal, layout: false %>
 
-  <a class="waves-effect waves-light btn blue" href="<%= "/carraway/preview/#{@post.uid}" %>" target="_blank">プレビュー</a>
   <% if @post.published %>
+    <a class="waves-effect waves-light btn blue" href="<%= "/carraway/preview/#{@post.uid}" %>" target="_blank">プレビュー</a>
     <form action="/carraway/unpublish" method="POST" class="col s12">
       <input type="hidden" name="_method" value="PATCH">
       <input type="hidden" name="uid" value="<%= @post.uid %>">
