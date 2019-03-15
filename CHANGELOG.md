@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.3.0](https://github.com/adorechic/carraway/tree/v1.3.0) (2019-03-15)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v1.2.0...v1.3.0)
+
+**Implemented enhancements:**
+
+- Show preview only if post has published [\#15](https://github.com/adorechic/carraway/pull/15) ([adorechic](https://github.com/adorechic))
+
 ## [v1.2.0](https://github.com/adorechic/carraway/tree/v1.2.0) (2019-03-11)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v1.1.0...v1.2.0)
 
