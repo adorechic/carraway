@@ -6,6 +6,8 @@ module Carraway
       def load(file)
         @config = YAML.load_file(file)
         Category.load(@config['categories'])
+
+        @root = ::File.expand_path('..', file)
       end
 
       def backend
@@ -26,6 +28,10 @@ module Carraway
 
       def labels
         @config['labels'] || {}
+      end
+
+      def views
+        @config['views'] && "#{@root}/#{@config['views']}"
       end
     end
   end

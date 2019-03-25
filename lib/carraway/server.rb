@@ -6,10 +6,16 @@ require 'time'
 
 module Carraway
   class Server < Sinatra::Base
-    set :views, ::File.expand_path('../views', __FILE__)
     set :method_override, true
     enable :sessions
     use Rack::Flash
+
+    def view(template)
+      if Config.views && ::File.exists?("#{Config.views}/#{template}.erb")
+        return erb template, views: Config.views
+      end
+      erb template
+    end
 
     get '/' do
       redirect '/carraway/'
@@ -21,7 +27,7 @@ module Carraway
       @category_posts.each do |category, posts|
         posts.sort_by!(&:updated).reverse!
       end
-      erb :top
+      view :top
     end
 
     get '/carraway/api/posts' do
@@ -41,14 +47,14 @@ module Carraway
 
     get '/carraway/new' do
       @files = FileRepository.new.all.sort_by!(&:created).reverse!
-      erb :new
+      view :new
     end
 
     get %r{/carraway/edit/(\d+)} do |uid|
       @post = Post.find(uid)
       @files = FileRepository.new.all.sort_by!(&:created).reverse!
       # FIXME handle not found
-      erb :edit
+      view :edit
     end
 
     get %r{/carraway/preview/(\d+)} do |uid|
@@ -127,12 +133,12 @@ module Carraway
     get %r{/carraway/files/(\d+)} do |uid|
       # FIXME handle not found
       @file = FileRepository.new.find(uid)
-      erb :file_edit
+      view :file_edit
     end
 
     get '/carraway/files' do
       @files = FileRepository.new.all.sort_by!(&:created).reverse!
-      erb :files
+      view :files
     end
 
     patch %r{/carraway/files/(\d+)} do |uid|
