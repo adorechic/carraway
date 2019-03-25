@@ -1,0 +1,17 @@
+categories:
+  test_category:
+    title: 'カテゴリータイトル'
+    dir: 'category-path'
+backend:
+  table_name: test_table
+  endpoint: http://localhost:6000
+  region: dummy
+file_backend:
+  bucket: test
+  endpoint: http://localhost:6001
+  region: dummy
+  prefix: files
+labels:
+  poem: 'ポエム'
+  news: 'ニュース'
+views: 'carraway/views'
