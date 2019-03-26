@@ -28,8 +28,8 @@ module Carraway
         @config['labels'] || {}
       end
 
-      def views
-        @config['views'] && ::File.expand_path(Dir.new(@config['views']))
+      def views_dir
+        @config['views_dir'] && ::File.expand_path(Dir.new(@config['views_dir']))
       end
     end
   end

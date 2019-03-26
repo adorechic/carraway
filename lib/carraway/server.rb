@@ -11,8 +11,8 @@ module Carraway
     use Rack::Flash
 
     def view(template)
-      if Config.views && ::File.exists?("#{Config.views}/#{template}.erb")
-        return erb template, views: Config.views
+      if Config.views_dir && ::File.exists?("#{Config.views_dir}/#{template}.erb")
+        return erb template, views: Config.views_dir
       end
       erb template
     end

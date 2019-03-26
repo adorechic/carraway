@@ -14,4 +14,4 @@ file_backend:
 labels:
   poem: 'ポエム'
   news: 'ニュース'
-views: 'spec/carraway/fixtures/views_option/views'
+views_dir: 'spec/carraway/fixtures/views_option/views'
