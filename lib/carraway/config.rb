@@ -29,7 +29,7 @@ module Carraway
       end
 
       def views
-        @config['views'] && "#{Carraway.working_dir}/#{@config['views']}"
+        @config['views'] && ::File.expand_path(Dir.new(@config['views']))
       end
     end
   end
