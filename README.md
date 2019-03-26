@@ -79,12 +79,14 @@ labels:
   label_key: 'Label title'
 ```
 
-### Configuring views
-If you would like to configure views, use `views` option.
-Add `views` to carraway.yml and copy `lib/carraway/views` directory to your project.
+### Customized views
+You can use your erb file as carraway views.
+If `views_dir` option is given, Carraway switches view root directory and use your erb file.
+Carraway just ignores unknown or different erb files.
+Please see default erb in https://github.com/adorechic/carraway/tree/master/lib/carraway/views
 
 ```yaml
-views: 'views'
+views_dir: 'path/to/your/views'
 ```
 
 ## Development
