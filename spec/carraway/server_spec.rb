@@ -34,7 +34,7 @@ RSpec.describe Carraway::Server, type: :request do
 
     context 'if :views is set' do
       before do
-        Carraway::Config.load('spec/test_views.yml')
+        Carraway::Config.load('spec/carraway/fixtures/views_option/test.yml')
       end
 
       it do
