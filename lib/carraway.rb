@@ -1,4 +1,7 @@
 module Carraway
+  def self.working_dir
+       Dir.pwd
+  end
 end
 
 require 'carraway/version'
