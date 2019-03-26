@@ -79,6 +79,14 @@ labels:
   label_key: 'Label title'
 ```
 
+### Configuring views
+If you would like to configure views, use `views` option.
+Add `views` to carraway.yml and copy `lib/carraway/views` directory to your project.
+
+```yaml
+views: 'views'
+```
+
 ## Development
 
 ### Run DynamoDB Local
