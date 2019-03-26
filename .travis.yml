@@ -7,7 +7,7 @@ env:
   global:
     - CC_TEST_REPORTER_ID=6163381913794d34d745b65d61b589c603cda50fb74c94a54ab0c6305c249bc3
 before_install:
-  - gem install bundler -v 1.16.2
+  - gem install bundler -v 2.0.1
   - docker-compose -f docker/docker-compose.yml up -d
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
