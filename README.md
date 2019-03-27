@@ -79,6 +79,16 @@ labels:
   label_key: 'Label title'
 ```
 
+### Customized views
+You can use your erb file as carraway views.
+If `views_dir` option is given, Carraway switches view root directory and use your erb file.
+Carraway just ignores unknown or different erb files.
+Please see default erb in https://github.com/adorechic/carraway/tree/master/lib/carraway/views
+
+```yaml
+views_dir: 'path/to/your/views'
+```
+
 ## Development
 
 ### Run DynamoDB Local

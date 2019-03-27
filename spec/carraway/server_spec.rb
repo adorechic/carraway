@@ -31,6 +31,18 @@ RSpec.describe Carraway::Server, type: :request do
       expect(last_response).to be_ok
       expect(last_response.body).to include(%{<a href="/carraway/edit/#{post.uid}">#{post.title}</a>})
     end
+
+    context 'if :views is set' do
+      before do
+        Carraway::Config.load('spec/carraway/fixtures/views_option/test.yml')
+      end
+
+      it do
+        get '/carraway/'
+        expect(last_response).to be_ok
+        expect(last_response.body).to include('This is top page customized by views option.')
+      end
+    end
   end
 
   describe 'GET /carraway/api/posts' do
