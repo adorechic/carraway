@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.4.0](https://github.com/adorechic/carraway/tree/v1.4.0) (2019-03-27)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v1.3.0...v1.4.0)
+
+**Merged pull requests:**
+
+- Update bundler [\#17](https://github.com/adorechic/carraway/pull/17) ([isohi](https://github.com/isohi))
+- Add views option [\#16](https://github.com/adorechic/carraway/pull/16) ([isohi](https://github.com/isohi))
+
 ## [v1.3.0](https://github.com/adorechic/carraway/tree/v1.3.0) (2019-03-15)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v1.2.0...v1.3.0)
 
