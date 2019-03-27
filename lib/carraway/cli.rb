@@ -4,9 +4,10 @@ module Carraway
   class CLI < Thor
     desc 'start', 'Start server'
     option :config, default: 'carraway.yml', aliases: 'c', type: :string
+    option :bind, default: 'localhost', aliases: 'o', type: :string
     def start
       Carraway::Config.load(options[:config])
-      Carraway::Server.run!(port: Config.port)
+      Carraway::Server.run!(port: Config.port, bind: options[:bind])
     end
 
 
