@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.5.0](https://github.com/adorechic/carraway/tree/v1.5.0) (2019-03-27)
+[Full Changelog](https://github.com/adorechic/carraway/compare/v1.4.0...v1.5.0)
+
+**Implemented enhancements:**
+
+- Support sinatra bind option [\#18](https://github.com/adorechic/carraway/pull/18) ([adorechic](https://github.com/adorechic))
+
 ## [v1.4.0](https://github.com/adorechic/carraway/tree/v1.4.0) (2019-03-27)
 [Full Changelog](https://github.com/adorechic/carraway/compare/v1.3.0...v1.4.0)
 
